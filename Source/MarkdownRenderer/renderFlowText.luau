@@ -156,8 +156,8 @@ local function reflowCodeGroup(group: CodeGroup, startX: number, startY: number,
                 pillIdx += 1
             end
             cursorY += totalHeight + LINE_SPACING
-            pillX = margin
-            availWidth = containerWidth - margin * 2
+            pillX = 0
+            availWidth = containerWidth
             lineWords = {}
             lineWidth = 0
         end
@@ -183,7 +183,7 @@ local function reflowCodeGroup(group: CodeGroup, startX: number, startY: number,
         group.pills[i].Visible = false
     end
 
-    local endX = if cursorY == startY then startX + lastPillWidth + margin * 2 else lastPillWidth + margin * 2
+    local endX = if cursorY == startY then startX + lastPillWidth + margin else lastPillWidth + margin
     return endX, cursorY
 end
 
@@ -192,12 +192,15 @@ end
 local function reflow(items: { FlowItem }, containerWidth: number, lineHeight: number, baseTextSize: number): number
     local cursorX = 0
     local cursorY = 0
+    local lastLineHeight = baseTextSize
 
     for _, item in items do
         if item.codeGroup then
-            -- Code groups start inline and wrap internally
             local lastWidth, lastY = reflowCodeGroup(item.codeGroup, cursorX, cursorY, containerWidth)
             cursorX = lastWidth
+            if lastY > cursorY then
+                lastLineHeight = item.codeGroup.height
+            end
             cursorY = lastY
         else
             local actualWidth = item.element.AbsoluteSize.X
@@ -205,6 +208,7 @@ local function reflow(items: { FlowItem }, containerWidth: number, lineHeight: n
             if cursorX > 0 and cursorX + itemWidth > containerWidth then
                 cursorX = 0
                 cursorY += lineHeight
+                lastLineHeight = baseTextSize
             end
             local margin = item.margin or 0
             item.element.Position = UDim2.fromOffset(cursorX + margin, cursorY)
@@ -212,7 +216,7 @@ local function reflow(items: { FlowItem }, containerWidth: number, lineHeight: n
         end
     end
 
-    return cursorY + baseTextSize
+    return cursorY + lastLineHeight
 end
 
 local function renderFlowText(
@@ -328,7 +332,6 @@ local function renderFlowText(
 
     local container = scope:New("Frame")({
         BackgroundTransparency = 1,
-        ClipsDescendants = true,
         Name = "FlowText",
         Size = UDim2.new(1, 0, 0, 0),
         [Children] = elements,

@@ -10,8 +10,10 @@ the appropriate RichText XML tags.
 
 local Types = require("./Types")
 local sanitize = require("./sanitize")
+local t = require("@packages/t")
 
 local function renderInline(spans: { Types.InlineSpan }): string
+    assert(t.array(t.table)(spans))
     local parts: { string } = {}
     for _, span in spans do
         local text = sanitize(span.Text)

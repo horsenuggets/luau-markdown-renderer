@@ -10,10 +10,12 @@ formatting (bold, italic, strikethrough, inline code).
 --]]
 
 local Types = require("./Types")
+local t = require("@packages/t")
 
 local Parser = {}
 
 local function parseInline(text: string): { Types.InlineSpan }
+    assert(t.string(text))
     local spans: { Types.InlineSpan } = {}
     local pos = 1
     local len = #text
@@ -304,7 +306,7 @@ local function parseBlocks(lines: { string }): { Types.BlockNode }
 end
 
 function Parser.parse(source: string): { Types.BlockNode }
-    assert(type(source) == "string", "Expected source to be a string")
+    assert(t.string(source))
     local lines = string.split(source, "\n")
     return parseBlocks(lines)
 end

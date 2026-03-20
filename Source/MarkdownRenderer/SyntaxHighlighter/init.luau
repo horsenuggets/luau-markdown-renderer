@@ -11,6 +11,7 @@ tags matching the selected theme.
 local Languages = require("@self/Languages")
 local Theme = require("@self/Theme")
 local Tokenizer = require("@self/Tokenizer")
+local t = require("@packages/t")
 
 local sanitize = require("@markdownrenderer/sanitize")
 
@@ -20,6 +21,8 @@ local DIFF_ALIASES = { diff = true, patch = true }
 -- red (keyword), @@ lines are purple (function_call), and
 -- everything else is normal.
 local function highlightDiff(code: string, themeName: string?): string
+    assert(t.string(code))
+    assert(t.optional(t.string)(themeName))
     local theme = Theme.get(themeName)
     local parts: { string } = {}
 
@@ -49,6 +52,9 @@ local function highlightDiff(code: string, themeName: string?): string
 end
 
 local function highlight(code: string, language: string?, themeName: string?): string
+    assert(t.string(code))
+    assert(t.optional(t.string)(language))
+    assert(t.optional(t.string)(themeName))
     if not language or language == "" then
         return sanitize(code)
     end

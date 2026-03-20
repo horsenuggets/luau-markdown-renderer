@@ -10,7 +10,10 @@ that many characters from the start of every line.
 
 --]]
 
+local t = require("@packages/t")
+
 local function dedent(text: string): string
+    assert(t.string(text))
     -- Remove a single leading newline and trailing whitespace
     text = text:gsub("^\n", "")
     text = text:gsub("%s+$", "")

@@ -10,6 +10,7 @@ logic — all language knowledge lives in grammar tables.
 --]]
 
 local Types = require("./Types")
+local t = require("@packages/t")
 
 local DEFAULT_OPERATORS = "+-*/%=<>!&|^~?:#"
 local DEFAULT_PUNCTUATION = "(){}[];,.@"
@@ -45,6 +46,8 @@ local function prepareGrammar(grammar: Types.LanguageGrammar): Types.PreparedGra
 end
 
 local function tokenize(source: string, grammar: Types.LanguageGrammar): { Types.Token }
+    assert(t.string(source))
+    assert(t.table(grammar))
     local prepared = prepareGrammar(grammar)
     local tokens: { Types.Token } = {}
     local pos = 1

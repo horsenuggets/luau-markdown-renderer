@@ -14,6 +14,7 @@ local SyntaxHighlighter = require("@self/SyntaxHighlighter")
 local Types = require("@self/Types")
 local renderFlowText = require("@self/renderFlowText")
 local renderInline = require("@self/renderInline")
+local t = require("@packages/t")
 
 local Children = Fusion.Children
 
@@ -349,6 +350,14 @@ local function render(
         Width: number?,
     }
 ): Instance
+    assert(t.table(scope))
+    assert(t.interface({
+        Source = t.string,
+        Font = t.optional(t.table),
+        HeadingFont = t.optional(t.table),
+        Height = t.optional(t.number),
+        Width = t.optional(t.number),
+    })(props))
     local PADDING = 12
     local textFont = props.Font or TEXT_FONT
     local headingFont = props.HeadingFont or HEADING_FONT

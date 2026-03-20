@@ -8,6 +8,7 @@ token types to hex color strings for use in RichText font tags.
 --]]
 
 local Types = require("./Types")
+local t = require("@packages/t")
 
 local THEMES: { [string]: Types.Theme } = {
     ["github-dark"] = {
@@ -65,6 +66,7 @@ local DEFAULT_THEME = "github-dark"
 local Theme = {}
 
 function Theme.get(name: string?): Types.Theme
+    assert(t.optional(t.string)(name))
     return THEMES[name or DEFAULT_THEME] or THEMES[DEFAULT_THEME]
 end
 

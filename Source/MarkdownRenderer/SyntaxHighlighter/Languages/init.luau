@@ -16,6 +16,7 @@ local Shell = require("@self/Shell")
 local WebJS = require("@self/WebJS")
 
 local Types = require("@self/../Types")
+local t = require("@packages/t")
 
 local registry: { [string]: Types.LanguageGrammar } = {}
 
@@ -37,6 +38,7 @@ registerFamily(WebJS)
 local Languages = {}
 
 function Languages.get(name: string): Types.LanguageGrammar?
+    assert(t.string(name))
     return registry[string.lower(name)]
 end
 

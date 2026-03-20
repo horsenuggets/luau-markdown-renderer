@@ -16,6 +16,7 @@ The layout dynamically reflows when the container is resized.
 local Fusion = require("@packages/Fusion")
 local Types = require("./Types")
 local sanitize = require("./sanitize")
+local t = require("@packages/t")
 
 local Children = Fusion.Children
 local TextService = game:GetService("TextService")
@@ -224,6 +225,13 @@ local function renderFlowText(
     spans: { Types.InlineSpan },
     config: FlowConfig
 ): Frame
+    assert(t.table(scope))
+    assert(t.array(t.table)(spans))
+    assert(t.interface({
+        font = t.table,
+        textColor = t.table,
+        textSize = t.number,
+    })(config))
     local baseFont = config.font
     local textColor = config.textColor
     local textSize = config.textSize

@@ -1,0 +1,27 @@
+{
+    "name": "luau-markdown-renderer-storybook",
+    "tree": {
+        "$className": "DataModel",
+        "HttpService": {
+            "$className": "HttpService",
+            "$properties": {
+                "HttpEnabled": true
+            }
+        },
+        "ReplicatedStorage": {
+            "$className": "ReplicatedStorage",
+            "MarkdownRenderer": {
+                "$className": "Folder",
+                "Packages": {
+                    "$path": "Packages"
+                },
+                "Source": {
+                    "$path": "Source"
+                },
+                "Stories": {
+                    "$path": "Stories"
+                }
+            }
+        }
+    }
+}

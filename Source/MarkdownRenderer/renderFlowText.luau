@@ -25,7 +25,7 @@ local CODE_CORNER_RADIUS = UDim.new(0, 4)
 local CODE_MARGIN_X = 4
 local CODE_PADDING_X = 4
 local CODE_TEXT_SIZE = 14
-local LINE_SPACING = 4
+local LINE_SPACING = 2
 local MONO_FONT = Font.new("rbxasset://fonts/families/RobotoMono.json")
 
 local function measureText(text: string, font: Font, textSize: number): Vector2
@@ -143,9 +143,12 @@ local function reflowCodeGroup(group: CodeGroup, startX: number, startY: number,
         group.pills[i].Visible = false
     end
 
-    -- Return the total width of the last line and the final Y
-    local lastLineWidth = lineWidth + CODE_PADDING_X * 2 + CODE_MARGIN_X * 2
-    return lastLineWidth, cursorY
+    -- Return the cursor X position after the last pill and
+    -- the final Y position.
+    local lastPillEnd = if cursorY == startY
+        then startX + lineWidth + CODE_PADDING_X * 2 + CODE_MARGIN_X * 2
+        else lineWidth + CODE_PADDING_X * 2 + CODE_MARGIN_X * 2
+    return lastPillEnd, cursorY
 end
 
 -- Reposition all flow items based on the given container width.

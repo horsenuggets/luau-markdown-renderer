@@ -22,7 +22,7 @@ local TextService = game:GetService("TextService")
 
 local CODE_BACKGROUND = Color3.fromRGB(50, 50, 50)
 local CODE_CORNER_RADIUS = UDim.new(0, 4)
-local CODE_MARGIN_X = 4
+local CODE_MARGIN_X = 2
 local CODE_PADDING_X = 4
 local CODE_TEXT_SIZE = 14
 local LINE_SPACING = 2
@@ -70,6 +70,8 @@ type CodeWord = {
 }
 
 type CodeGroup = {
+    font: Font,
+    fontSize: number,
     height: number,
     pills: { Frame },
     words: { CodeWord },
@@ -91,64 +93,98 @@ type FlowConfig = {
 -- Distribute code group words into pre-allocated pill frames
 -- based on available width. Each pill gets the words that fit on
 -- one line. Unused pills are hidden.
+local function flushPill(
+    pill: Frame,
+    words: { string },
+    width: number,
+    height: number,
+    x: number,
+    y: number,
+    font: Font,
+    fontSize: number
+)
+    -- Trim leading space from first word, trailing space from
+    -- last word for clean pill text
+    local trimmedWords = table.clone(words)
+    trimmedWords[1] = string.gsub(trimmedWords[1], "^%s+", "")
+    trimmedWords[#trimmedWords] = string.gsub(trimmedWords[#trimmedWords], "%s+$", "")
+    local text = table.concat(trimmedWords)
+
+    -- Measure trimmed text for accurate pill width
+    local params = Instance.new("GetTextBoundsParams")
+    params.Text = text
+    params.Font = font
+    params.Size = fontSize
+    params.Width = math.huge
+    local bounds = TextService:GetTextBoundsAsync(params)
+    local pillWidth = math.ceil(bounds.X) + CODE_PADDING_X * 2
+
+    pill.Visible = true
+    pill.Size = UDim2.fromOffset(pillWidth, height)
+    pill.Position = UDim2.fromOffset(x, y)
+    local label = pill:FindFirstChildOfClass("TextLabel")
+    if label then
+        label.Text = text
+    end
+    return pillWidth
+end
+
 local function reflowCodeGroup(group: CodeGroup, startX: number, startY: number, containerWidth: number)
-    local availWidth = containerWidth - startX - CODE_MARGIN_X * 2
+    local margin = CODE_MARGIN_X
+    local pillX = startX + margin
+    local availWidth = containerWidth - pillX - margin
     local pillIdx = 1
     local lineWords: { string } = {}
     local lineWidth = 0
     local cursorY = startY
     local totalHeight = group.height
+    local lastPillWidth = 0
 
     for _, word in group.words do
         if lineWidth > 0 and lineWidth + word.width > availWidth then
-            -- Flush current line to a pill
             if pillIdx <= #group.pills then
-                local pill = group.pills[pillIdx]
-                local text = table.concat(lineWords)
-                pill.Visible = true
-                pill.Size = UDim2.fromOffset(lineWidth + CODE_PADDING_X * 2, totalHeight)
-                pill.Position = UDim2.fromOffset(startX + CODE_MARGIN_X, cursorY)
-                local label = pill:FindFirstChildOfClass("TextLabel")
-                if label then
-                    label.Text = text
-                end
+                lastPillWidth = flushPill(
+                    group.pills[pillIdx],
+                    lineWords,
+                    lineWidth,
+                    totalHeight,
+                    pillX,
+                    cursorY,
+                    group.font,
+                    group.fontSize
+                )
                 pillIdx += 1
             end
-            -- New line
             cursorY += totalHeight + LINE_SPACING
+            pillX = margin
+            availWidth = containerWidth - margin * 2
             lineWords = {}
             lineWidth = 0
-            availWidth = containerWidth - CODE_MARGIN_X * 2
         end
         table.insert(lineWords, word.text)
         lineWidth += word.width
     end
 
-    -- Flush remaining words
     if #lineWords > 0 and pillIdx <= #group.pills then
-        local pill = group.pills[pillIdx]
-        local text = table.concat(lineWords)
-        pill.Visible = true
-        pill.Size = UDim2.fromOffset(lineWidth + CODE_PADDING_X * 2, totalHeight)
-        pill.Position = UDim2.fromOffset(startX + CODE_MARGIN_X, cursorY)
-        local label = pill:FindFirstChildOfClass("TextLabel")
-        if label then
-            label.Text = text
-        end
+        lastPillWidth = flushPill(
+            group.pills[pillIdx],
+            lineWords,
+            lineWidth,
+            totalHeight,
+            pillX,
+            cursorY,
+            group.font,
+            group.fontSize
+        )
         pillIdx += 1
     end
 
-    -- Hide unused pills
     for i = pillIdx, #group.pills do
         group.pills[i].Visible = false
     end
 
-    -- Return the cursor X position after the last pill and
-    -- the final Y position.
-    local lastPillEnd = if cursorY == startY
-        then startX + lineWidth + CODE_PADDING_X * 2 + CODE_MARGIN_X * 2
-        else lineWidth + CODE_PADDING_X * 2 + CODE_MARGIN_X * 2
-    return lastPillEnd, cursorY
+    local endX = if cursorY == startY then startX + lastPillWidth + margin * 2 else lastPillWidth + margin * 2
+    return endX, cursorY
 end
 
 -- Reposition all flow items based on the given container width.
@@ -159,11 +195,7 @@ local function reflow(items: { FlowItem }, containerWidth: number, lineHeight: n
 
     for _, item in items do
         if item.codeGroup then
-            -- Code groups handle their own multi-line layout
-            if cursorX > 0 and cursorX + item.width > containerWidth then
-                cursorX = 0
-                cursorY += lineHeight
-            end
+            -- Code groups start inline and wrap internally
             local lastWidth, lastY = reflowCodeGroup(item.codeGroup, cursorX, cursorY, containerWidth)
             cursorX = lastWidth
             cursorY = lastY
@@ -257,6 +289,8 @@ local function renderFlowText(
             local fullWidth = totalTextWidth + CODE_PADDING_X * 2 + CODE_MARGIN_X * 2
             table.insert(items, {
                 codeGroup = {
+                    font = font,
+                    fontSize = spanTextSize,
                     height = pillHeight,
                     pills = pills,
                     words = wordData,

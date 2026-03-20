@@ -148,7 +148,7 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
                 SortOrder = Enum.SortOrder.LayoutOrder,
             }),
         }
-        local BULLET_WIDTH = 14
+        local BULLET_WIDTH = 20
         for i, item in items do
             local indent = 16 + (item.Indent or 0) * 24
             local textLeft = indent + BULLET_WIDTH
@@ -192,9 +192,9 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
                             Size = UDim2.new(0, BULLET_WIDTH, 0, DEFAULT_TEXT_SIZE),
                             Text = "\u{25CF}",
                             TextColor3 = DEFAULT_TEXT_COLOR,
-                            TextSize = DEFAULT_TEXT_SIZE,
-                            TextXAlignment = Enum.TextXAlignment.Left,
-                            TextYAlignment = Enum.TextYAlignment.Top,
+                            TextSize = math.floor(DEFAULT_TEXT_SIZE * 0.65),
+                            TextXAlignment = Enum.TextXAlignment.Center,
+                            TextYAlignment = Enum.TextYAlignment.Center,
                         }),
                         content,
                     },

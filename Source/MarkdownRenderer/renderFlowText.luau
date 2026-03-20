@@ -228,8 +228,8 @@ local function renderFlowText(
     assert(t.table(scope))
     assert(t.array(t.table)(spans))
     assert(t.interface({
-        font = t.table,
-        textColor = t.table,
+        font = t.Font,
+        textColor = t.Color3,
         textSize = t.number,
     })(config))
     local baseFont = config.font

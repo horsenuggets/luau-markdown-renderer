@@ -352,10 +352,10 @@ local function render(
 ): Instance
     assert(t.table(scope))
     assert(t.interface({
-        Source = t.string,
-        Font = t.optional(t.table),
-        HeadingFont = t.optional(t.table),
+        Font = t.optional(t.Font),
+        HeadingFont = t.optional(t.Font),
         Height = t.optional(t.number),
+        Source = t.string,
         Width = t.optional(t.number),
     })(props))
     local PADDING = 12

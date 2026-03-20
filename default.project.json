@@ -1,0 +1,6 @@
+{
+    "name": "luau-markdown-renderer",
+    "tree": {
+        "$path": "Source/MarkdownRenderer"
+    }
+}

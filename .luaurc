@@ -1,0 +1,25 @@
+{
+    "aliases": {
+        "devpackages": "./DevPackages/",
+        "lune": "~/.lune/.typedefs/0.10.4-horse.6.0/",
+        "markdownrenderer": "./Source/MarkdownRenderer/",
+        "packages": "./Packages/",
+        "stories": "./Stories/",
+        "tests": "./Tests/"
+    },
+    "globals": [
+        "afterAll",
+        "afterEach",
+        "beforeAll",
+        "beforeEach",
+        "describe",
+        "elapsedTime",
+        "expect",
+        "fail",
+        "fdescribe",
+        "fit",
+        "it",
+        "xdescribe",
+        "xit"
+    ]
+}

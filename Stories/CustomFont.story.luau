@@ -2,8 +2,8 @@
 
 CustomFont.story
 
-Demonstrates rendering with a custom font (Nunito) instead of the
-default Source Sans Pro.
+Demonstrates rendering with a custom font (FredokaOne) instead
+of the default Source Sans Pro.
 
 --]]
 
@@ -11,13 +11,11 @@ local Fusion = require("@packages/Fusion")
 local MarkdownRenderer = require("@markdownrenderer")
 local dedent = require("@markdownrenderer/dedent")
 
-local Children = Fusion.Children
-
 local SOURCE = dedent([[
 	# Custom Font Demo
 
-	This story uses **Nunito** as the base font instead of the
-	default Source Sans Pro. All text elements use this font.
+	This story uses **FredokaOne** as the base font instead of
+	the default Source Sans Pro. All text elements use this font.
 
 	## Features
 
@@ -50,8 +48,8 @@ return {
 
         local ui = MarkdownRenderer.render(scope, {
             Source = SOURCE,
-            Font = Font.new("rbxasset://fonts/families/Nunito.json"),
-            BoldFont = Font.new("rbxasset://fonts/families/Nunito.json", Enum.FontWeight.Bold),
+            Font = Font.new("rbxasset://fonts/families/FredokaOne.json"),
+            HeadingFont = Font.new("rbxasset://fonts/families/FredokaOne.json"),
         })
         ui.AnchorPoint = Vector2.new(0.5, 0.5)
         ui.Position = UDim2.fromScale(0.5, 0.5)

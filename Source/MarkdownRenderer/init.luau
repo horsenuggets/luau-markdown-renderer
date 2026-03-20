@@ -32,8 +32,8 @@ local HEADING_TEXT_COLOR = Color3.fromRGB(228, 228, 228)
 local QUOTE_BORDER_COLOR = Color3.fromRGB(100, 100, 100)
 local RULE_COLOR = Color3.fromRGB(80, 80, 80)
 local STROKE_COLOR = Color3.fromRGB(60, 60, 60)
-local TEXT_FONT = Font.new("rbxasset://fonts/families/GothamSSm.json")
-local BOLD_FONT = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold)
+local TEXT_FONT = Font.new("rbxasset://fonts/families/SourceSansPro.json")
+local HEADING_FONT = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Bold)
 local MONO_FONT = Font.new("rbxasset://fonts/families/RobotoMono.json")
 
 local function hasCode(spans: { Types.InlineSpan }): boolean
@@ -50,7 +50,7 @@ local function renderBlock(
     node: Types.BlockNode,
     layoutOrder: number,
     textFont: Font,
-    boldFont: Font
+    headingFont: Font
 ): Instance?
     if node.Type == "Paragraph" then
         local spans = node.Content :: { Types.InlineSpan }
@@ -84,7 +84,7 @@ local function renderBlock(
         local topMargin = if layoutOrder > 1 then 8 else 0
         if hasCode(spans) then
             local container = renderFlowText(scope, spans, {
-                font = boldFont,
+                font = headingFont,
                 textColor = HEADING_TEXT_COLOR,
                 textSize = headingSize,
             })
@@ -103,7 +103,7 @@ local function renderBlock(
                 scope:New("TextLabel")({
                     AutomaticSize = Enum.AutomaticSize.Y,
                     BackgroundTransparency = 1,
-                    FontFace = boldFont,
+                    FontFace = headingFont,
                     RichText = true,
                     Size = UDim2.new(1, 0, 0, 0),
                     Text = renderInline(spans),
@@ -296,7 +296,7 @@ local function renderBlock(
         }
         local children = node.Children :: { Types.BlockNode }
         for i, child in children do
-            local rendered = renderBlock(scope, child, i, textFont, boldFont)
+            local rendered = renderBlock(scope, child, i, textFont, headingFont)
             if rendered then
                 table.insert(quoteChildren, rendered)
             end
@@ -342,7 +342,7 @@ end
 local function render(
     scope: Fusion.Scope<typeof(Fusion)>,
     props: {
-        BoldFont: Font?,
+        HeadingFont: Font?,
         Font: Font?,
         Height: number?,
         Source: string,
@@ -351,7 +351,7 @@ local function render(
 ): Instance
     local PADDING = 12
     local textFont = props.Font or TEXT_FONT
-    local boldFont = props.BoldFont or BOLD_FONT
+    local headingFont = props.HeadingFont or HEADING_FONT
     local nodes = Parser.parse(props.Source)
     local blockChildren: { Instance } = {
         scope:New("UIListLayout")({
@@ -366,7 +366,7 @@ local function render(
         }),
     }
     for i, node in nodes do
-        local rendered = renderBlock(scope, node, i, textFont, boldFont)
+        local rendered = renderBlock(scope, node, i, textFont, headingFont)
         if rendered then
             table.insert(blockChildren, rendered)
         end

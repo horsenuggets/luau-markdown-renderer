@@ -32,8 +32,8 @@ local HEADING_TEXT_COLOR = Color3.fromRGB(228, 228, 228)
 local QUOTE_BORDER_COLOR = Color3.fromRGB(100, 100, 100)
 local RULE_COLOR = Color3.fromRGB(80, 80, 80)
 local STROKE_COLOR = Color3.fromRGB(60, 60, 60)
-local TEXT_FONT = Font.new("rbxasset://fonts/families/SourceSansPro.json")
-local BOLD_FONT = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Bold)
+local TEXT_FONT = Font.new("rbxasset://fonts/families/GothamSSm.json")
+local BOLD_FONT = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold)
 local MONO_FONT = Font.new("rbxasset://fonts/families/RobotoMono.json")
 
 local function hasCode(spans: { Types.InlineSpan }): boolean
@@ -45,12 +45,18 @@ local function hasCode(spans: { Types.InlineSpan }): boolean
     return false
 end
 
-local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.BlockNode, layoutOrder: number): Instance?
+local function renderBlock(
+    scope: Fusion.Scope<typeof(Fusion)>,
+    node: Types.BlockNode,
+    layoutOrder: number,
+    textFont: Font,
+    boldFont: Font
+): Instance?
     if node.Type == "Paragraph" then
         local spans = node.Content :: { Types.InlineSpan }
         if hasCode(spans) then
             local container = renderFlowText(scope, spans, {
-                font = TEXT_FONT,
+                font = textFont,
                 textColor = DEFAULT_TEXT_COLOR,
                 textSize = DEFAULT_TEXT_SIZE,
             })
@@ -60,7 +66,7 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
         return scope:New("TextLabel")({
             AutomaticSize = Enum.AutomaticSize.Y,
             BackgroundTransparency = 1,
-            FontFace = TEXT_FONT,
+            FontFace = textFont,
             LayoutOrder = layoutOrder,
             RichText = true,
             Size = UDim2.new(1, 0, 0, 0),
@@ -78,7 +84,7 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
         local topMargin = if layoutOrder > 1 then 8 else 0
         if hasCode(spans) then
             local container = renderFlowText(scope, spans, {
-                font = BOLD_FONT,
+                font = boldFont,
                 textColor = HEADING_TEXT_COLOR,
                 textSize = headingSize,
             })
@@ -97,7 +103,7 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
                 scope:New("TextLabel")({
                     AutomaticSize = Enum.AutomaticSize.Y,
                     BackgroundTransparency = 1,
-                    FontFace = BOLD_FONT,
+                    FontFace = boldFont,
                     RichText = true,
                     Size = UDim2.new(1, 0, 0, 0),
                     Text = renderInline(spans),
@@ -148,14 +154,14 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
                 SortOrder = Enum.SortOrder.LayoutOrder,
             }),
         }
-        local BULLET_WIDTH = 20
+        local BULLET_WIDTH = 22
         for i, item in items do
             local indent = 16 + (item.Indent or 0) * 24
             local textLeft = indent + BULLET_WIDTH
             local content: GuiObject
             if hasCode(item.Content) then
                 content = renderFlowText(scope, item.Content, {
-                    font = TEXT_FONT,
+                    font = textFont,
                     textColor = DEFAULT_TEXT_COLOR,
                     textSize = DEFAULT_TEXT_SIZE,
                 })
@@ -165,7 +171,7 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
                 content = scope:New("TextLabel")({
                     AutomaticSize = Enum.AutomaticSize.Y,
                     BackgroundTransparency = 1,
-                    FontFace = TEXT_FONT,
+                    FontFace = textFont,
                     Position = UDim2.fromOffset(textLeft, 0),
                     RichText = true,
                     Size = UDim2.new(1, -textLeft, 0, 0),
@@ -187,13 +193,13 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
                     [Children] = {
                         scope:New("TextLabel")({
                             BackgroundTransparency = 1,
-                            FontFace = TEXT_FONT,
-                            Position = UDim2.fromOffset(indent, 0),
+                            FontFace = textFont,
+                            Position = UDim2.fromOffset(indent + 4, 0),
                             Size = UDim2.new(0, BULLET_WIDTH, 0, DEFAULT_TEXT_SIZE),
                             Text = "\u{25CF}",
                             TextColor3 = DEFAULT_TEXT_COLOR,
                             TextSize = math.floor(DEFAULT_TEXT_SIZE * 0.65),
-                            TextXAlignment = Enum.TextXAlignment.Center,
+                            TextXAlignment = Enum.TextXAlignment.Left,
                             TextYAlignment = Enum.TextYAlignment.Center,
                         }),
                         content,
@@ -225,7 +231,7 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
             local content: GuiObject
             if hasCode(item.Content) then
                 content = renderFlowText(scope, item.Content, {
-                    font = TEXT_FONT,
+                    font = textFont,
                     textColor = DEFAULT_TEXT_COLOR,
                     textSize = DEFAULT_TEXT_SIZE,
                 })
@@ -235,7 +241,7 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
                 content = scope:New("TextLabel")({
                     AutomaticSize = Enum.AutomaticSize.Y,
                     BackgroundTransparency = 1,
-                    FontFace = TEXT_FONT,
+                    FontFace = textFont,
                     Position = UDim2.fromOffset(textLeft, 0),
                     RichText = true,
                     Size = UDim2.new(1, -textLeft, 0, 0),
@@ -257,7 +263,7 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
                     [Children] = {
                         scope:New("TextLabel")({
                             BackgroundTransparency = 1,
-                            FontFace = TEXT_FONT,
+                            FontFace = textFont,
                             Position = UDim2.fromOffset(indent, 0),
                             Size = UDim2.new(0, NUMBER_WIDTH, 0, DEFAULT_TEXT_SIZE),
                             Text = `{number}.`,
@@ -290,7 +296,7 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
         }
         local children = node.Children :: { Types.BlockNode }
         for i, child in children do
-            local rendered = renderBlock(scope, child, i)
+            local rendered = renderBlock(scope, child, i, textFont, boldFont)
             if rendered then
                 table.insert(quoteChildren, rendered)
             end
@@ -320,7 +326,7 @@ local function renderBlock(scope: Fusion.Scope<typeof(Fusion)>, node: Types.Bloc
         return scope:New("Frame")({
             BackgroundTransparency = 1,
             LayoutOrder = layoutOrder,
-            Size = UDim2.new(1, 0, 0, 17),
+            Size = UDim2.new(1, 0, 0, 21),
             [Children] = {
                 scope:New("Frame")({
                     BackgroundColor3 = RULE_COLOR,
@@ -336,12 +342,16 @@ end
 local function render(
     scope: Fusion.Scope<typeof(Fusion)>,
     props: {
+        BoldFont: Font?,
+        Font: Font?,
         Height: number?,
         Source: string,
         Width: number?,
     }
 ): Instance
     local PADDING = 12
+    local textFont = props.Font or TEXT_FONT
+    local boldFont = props.BoldFont or BOLD_FONT
     local nodes = Parser.parse(props.Source)
     local blockChildren: { Instance } = {
         scope:New("UIListLayout")({
@@ -356,7 +366,7 @@ local function render(
         }),
     }
     for i, node in nodes do
-        local rendered = renderBlock(scope, node, i)
+        local rendered = renderBlock(scope, node, i, textFont, boldFont)
         if rendered then
             table.insert(blockChildren, rendered)
         end

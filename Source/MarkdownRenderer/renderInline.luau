@@ -9,6 +9,7 @@ the appropriate RichText XML tags.
 --]]
 
 local Types = require("./Types")
+local applyRichText = require("./applyRichText")
 local sanitize = require("./sanitize")
 local t = require("@packages/t")
 
@@ -20,15 +21,7 @@ local function renderInline(spans: { Types.InlineSpan }): string
         if span.Code then
             text = `<font face="RobotoMono" size="14"><mark color="#333333">\u{00A0}{text}\u{00A0}</mark></font>`
         end
-        if span.Bold then
-            text = `<b>{text}</b>`
-        end
-        if span.Italic then
-            text = `<i>{text}</i>`
-        end
-        if span.Strikethrough then
-            text = `<s>{text}</s>`
-        end
+        text = applyRichText(text, span)
         table.insert(parts, text)
     end
     return table.concat(parts)

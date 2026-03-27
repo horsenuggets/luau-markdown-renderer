@@ -1,6 +1,6 @@
 --[[
 
-ParserTest.spec
+ParserTest
 
 Tests for the Markdown parser covering block-level and inline parsing.
 

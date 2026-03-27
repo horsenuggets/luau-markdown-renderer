@@ -1,6 +1,6 @@
 --[[
 
-RenderInlineTest.spec
+RenderInlineTest
 
 Tests for the renderInline function that converts InlineSpan arrays
 to RichText strings.

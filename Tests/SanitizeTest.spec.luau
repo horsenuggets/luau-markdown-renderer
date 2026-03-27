@@ -1,6 +1,6 @@
 --[[
 
-SanitizeTest.spec
+SanitizeTest
 
 Tests for the HTML entity sanitization function.
 

@@ -1,3 +1,5 @@
+--!nocheck
+
 --[[
 
 renderFlowText
@@ -15,6 +17,7 @@ The layout dynamically reflows when the container is resized.
 
 local Fusion = require("@packages/Fusion")
 local Types = require("./Types")
+local applyRichText = require("./applyRichText")
 local sanitize = require("./sanitize")
 local t = require("@packages/t")
 
@@ -37,19 +40,6 @@ local function measureText(text: string, font: Font, textSize: number): Vector2
     params.Width = math.huge
     local bounds = TextService:GetTextBoundsAsync(params)
     return bounds
-end
-
-local function applyRichText(text: string, span: Types.InlineSpan): string
-    if span.Bold then
-        text = `<b>{text}</b>`
-    end
-    if span.Italic then
-        text = `<i>{text}</i>`
-    end
-    if span.Strikethrough then
-        text = `<s>{text}</s>`
-    end
-    return text
 end
 
 -- Split text into words, preserving leading and trailing

@@ -1,6 +1,6 @@
 --[[
 
-ParserEdgeCasesTest.spec
+ParserEdgeCasesTest
 
 Additional parser tests covering edge cases, mixed content, and
 complex nesting scenarios.

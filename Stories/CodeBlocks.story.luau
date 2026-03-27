@@ -10,24 +10,24 @@ local dedent = require("@markdownrenderer/dedent")
 local makeStory = require("@stories/makeStory")
 
 return makeStory(dedent([[
-	## Code Examples
+    ## Code Examples
 
-	A Luau code block:
+    A Luau code block:
 
-	```luau
-	local function greet(name: string)
-	    print(`Hello, {name}!`)
-	end
+    ```luau
+    local function greet(name: string)
+        print(`Hello, {name}!`)
+    end
 
-	greet("World")
-	```
+    greet("World")
+    ```
 
-	A code block with no language:
+    A code block with no language:
 
-	```
-	just some plain text
-	in a code block
-	```
+    ```
+    just some plain text
+    in a code block
+    ```
 
-	And some `inline code` in a paragraph.
+    And some `inline code` in a paragraph.
 ]]))

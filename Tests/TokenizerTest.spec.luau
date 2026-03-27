@@ -1,6 +1,6 @@
 --[[
 
-TokenizerTest.spec
+TokenizerTest
 
 Tests for the syntax highlighting tokenizer engine covering
 keywords, strings, comments, numbers, operators, function calls,
@@ -18,7 +18,7 @@ local function tokTypes(tokens)
     return types
 end
 
-local function tokTexts(tokens)
+local function _tokTexts(tokens)
     local texts = {}
     for _, t in tokens do
         table.insert(texts, t.text)

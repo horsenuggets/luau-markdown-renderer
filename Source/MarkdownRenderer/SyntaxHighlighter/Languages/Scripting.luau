@@ -7,8 +7,10 @@ PHP, and Elixir.
 
 --]]
 
-local DOUBLE_QUOTE = { open = '"', close = '"' }
-local SINGLE_QUOTE = { open = "'", close = "'" }
+local SharedConstants = require("./SharedConstants")
+
+local DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
+local SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
 
 local Lua = {
     blockComments = { { "--[[", "]]" } },

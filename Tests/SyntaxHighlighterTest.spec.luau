@@ -1,6 +1,6 @@
 --[[
 
-SyntaxHighlighterTest
+SyntaxHighlighterTest.spec
 
 Tests for the syntax highlighter covering the highlight function,
 language registry, theme system, and diff highlighting.

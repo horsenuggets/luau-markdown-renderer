@@ -1,6 +1,6 @@
 --[[
 
-DedentTest
+DedentTest.spec
 
 Tests for the dedent utility that strips common leading whitespace
 from multi-line strings.

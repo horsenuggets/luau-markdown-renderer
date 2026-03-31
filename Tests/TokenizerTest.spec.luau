@@ -1,6 +1,6 @@
 --[[
 
-TokenizerTest
+TokenizerTest.spec
 
 Tests for the syntax highlighting tokenizer engine covering
 keywords, strings, comments, numbers, operators, function calls,

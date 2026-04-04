@@ -12,14 +12,14 @@ local Testable = require("@devpackages/Testable")
 local process = require("@lune/process")
 
 Testable.configure({
-	Coverage = true,
-	CoverageThreshold = 0,
-	CoverageRoots = script.Parent.Parent.Source,
+    Coverage = true,
+    CoverageThreshold = 0,
+    CoverageRoots = script.Parent.Parent.Source,
 })
 
 local function runTests()
-	local _, passed = Testable.run(script.Parent.Parent.Tests)
-	process.exit(if passed then 0 else 1)
+    local _, passed = Testable.run(script.Parent.Parent.Tests)
+    process.exit(if passed then 0 else 1)
 end
 
 runTests()

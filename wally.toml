@@ -1,13 +1,12 @@
 [package]
 name = "horsenuggets/luau-markdown-renderer"
 description = "Renders Markdown text into Roblox Studio UI elements."
-version = "0.0.2"
+version = "0.0.3"
 license = "MIT"
 realm = "shared"
 registry = "https://github.com/UpliftGames/wally-index"
 repository = "https://github.com/horsenuggets/luau-markdown-renderer"
 include = [
-    ".luaurc",
     "default.project.json",
     "init.luau",
     "LICENSE",

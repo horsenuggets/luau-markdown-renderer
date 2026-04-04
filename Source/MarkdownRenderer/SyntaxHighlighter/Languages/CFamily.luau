@@ -7,10 +7,12 @@ Java, Go, Rust, Zig, Kotlin, Swift, and Dart.
 
 --]]
 
-local DOUBLE_QUOTE = { open = '"', close = '"' }
-local SINGLE_QUOTE = { open = "'", close = "'" }
-local C_COMMENTS = { { "/*", "*/" } }
-local C_LINE_COMMENTS = { "//" }
+local SharedConstants = require("./SharedConstants")
+
+local C_COMMENTS = SharedConstants.C_COMMENTS
+local C_LINE_COMMENTS = SharedConstants.C_LINE_COMMENTS
+local DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
+local SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
 
 local C = {
     blockComments = C_COMMENTS,

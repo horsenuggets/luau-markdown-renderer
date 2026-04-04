@@ -53,9 +53,9 @@ return function()
     it("should work with bracket string pattern", function()
         -- Simulates [[ ... ]] usage
         local result = dedent([[
-			Hello
-			World
-		]])
+            Hello
+            World
+        ]])
         expect(result).to.equal("Hello\nWorld")
     end)
 end

@@ -10,18 +10,18 @@ local dedent = require("@markdownrenderer/dedent")
 local makeStory = require("@stories/makeStory")
 
 return makeStory(dedent([[
-	## Block Quotes
+    ## Block Quotes
 
-	> This is a simple block quote.
+    > This is a simple block quote.
 
-	> This quote has **bold** and *italic* formatting.
+    > This quote has **bold** and *italic* formatting.
 
-	> This is a multi-line quote
-	> that spans two lines.
+    > This is a multi-line quote
+    > that spans two lines.
 
-	Some text between quotes.
+    Some text between quotes.
 
-	> Outer quote
-	> > Nested quote inside
-	> Back to outer
+    > Outer quote
+    > > Nested quote inside
+    > Back to outer
 ]]))

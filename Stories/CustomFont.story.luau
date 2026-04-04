@@ -12,33 +12,33 @@ local MarkdownRenderer = require("@markdownrenderer")
 local dedent = require("@markdownrenderer/dedent")
 
 local SOURCE = dedent([[
-	# Custom Font Demo
+    # Custom Font Demo
 
-	This story uses **FredokaOne** as the base font instead of
-	the default Source Sans Pro. All text elements use this font.
+    This story uses **FredokaOne** as the base font instead of
+    the default Source Sans Pro. All text elements use this font.
 
-	## Features
+    ## Features
 
-	- Bold text renders with the **bold weight** of the font
-	- *Italic text* uses the italic variant
-	- `inline code` still uses RobotoMono
-	- ~~Strikethrough~~ works as expected
+    - Bold text renders with the **bold weight** of the font
+    - *Italic text* uses the italic variant
+    - `inline code` still uses RobotoMono
+    - ~~Strikethrough~~ works as expected
 
-	## Code Block
+    ## Code Block
 
-	```luau
-	local function hello(name: string)
-	    print(`Hello, {name}!`)
-	end
-	```
+    ```luau
+    local function hello(name: string)
+        print(`Hello, {name}!`)
+    end
+    ```
 
-	> Block quotes inherit the custom font as well.
+    > Block quotes inherit the custom font as well.
 
-	---
+    ---
 
-	1. Numbered lists
-	2. Also use the custom font
-	3. For all text content
+    1. Numbered lists
+    2. Also use the custom font
+    3. For all text content
 ]])
 
 return {

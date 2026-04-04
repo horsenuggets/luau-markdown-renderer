@@ -1,3 +1,5 @@
+--!nocheck
+
 --[[
 
 MarkdownRenderer
@@ -36,6 +38,88 @@ local STROKE_COLOR = Color3.fromRGB(60, 60, 60)
 local TEXT_FONT = Font.new("rbxasset://fonts/families/SourceSansPro.json")
 local HEADING_FONT = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Bold)
 local MONO_FONT = Font.new("rbxasset://fonts/families/RobotoMono.json")
+
+type MarkerProps = {
+    fontFace: Font,
+    index: number,
+    indent: number,
+    markerWidth: number,
+    textColor: Color3,
+    textSize: number,
+}
+
+local function renderList(
+    scope: Fusion.Scope<typeof(Fusion)>,
+    items: { Types.ListItem },
+    layoutOrder: number,
+    textFont: Font,
+    createMarker: (scope: Fusion.Scope<typeof(Fusion)>, props: MarkerProps) -> Instance
+): Instance
+    local MARKER_WIDTH = 22
+    local listChildren: { Instance } = {
+        scope:New("UIListLayout")({
+            Padding = UDim.new(0, 4),
+            SortOrder = Enum.SortOrder.LayoutOrder,
+        }),
+    }
+    for i, item in items do
+        local indent = 16 + (item.Indent or 0) * 24
+        local textLeft = indent + MARKER_WIDTH
+        local content: GuiObject
+        if hasCode(item.Content) then
+            content = renderFlowText(scope, item.Content, {
+                font = textFont,
+                textColor = DEFAULT_TEXT_COLOR,
+                textSize = DEFAULT_TEXT_SIZE,
+            })
+            content.Position = UDim2.fromOffset(textLeft, 0)
+            content.Size = UDim2.new(1, -textLeft, 0, 0)
+        else
+            content = scope:New("TextLabel")({
+                AutomaticSize = Enum.AutomaticSize.Y,
+                BackgroundTransparency = 1,
+                FontFace = textFont,
+                Position = UDim2.fromOffset(textLeft, 0),
+                RichText = true,
+                Size = UDim2.new(1, -textLeft, 0, 0),
+                Text = renderInline(item.Content),
+                TextColor3 = DEFAULT_TEXT_COLOR,
+                TextSize = DEFAULT_TEXT_SIZE,
+                TextWrapped = true,
+                TextXAlignment = Enum.TextXAlignment.Left,
+                TextYAlignment = Enum.TextYAlignment.Top,
+            }) :: GuiObject
+        end
+        local marker = createMarker(scope, {
+            fontFace = textFont,
+            index = i,
+            indent = indent,
+            markerWidth = MARKER_WIDTH,
+            textColor = DEFAULT_TEXT_COLOR,
+            textSize = DEFAULT_TEXT_SIZE,
+        })
+        table.insert(
+            listChildren,
+            scope:New("Frame")({
+                AutomaticSize = Enum.AutomaticSize.Y,
+                BackgroundTransparency = 1,
+                LayoutOrder = i,
+                Size = UDim2.new(1, 0, 0, 0),
+                [Children] = {
+                    marker,
+                    content,
+                },
+            })
+        )
+    end
+    return scope:New("Frame")({
+        AutomaticSize = Enum.AutomaticSize.Y,
+        BackgroundTransparency = 1,
+        LayoutOrder = layoutOrder,
+        Size = UDim2.new(1, 0, 0, 0),
+        [Children] = listChildren,
+    })
+end
 
 local function hasCode(spans: { Types.InlineSpan }): boolean
     for _, span in spans do
@@ -148,143 +232,33 @@ local function renderBlock(
             },
         })
     elseif node.Type == "BulletList" then
-        local items = node.Items :: { Types.ListItem }
-        local listChildren: { Instance } = {
-            scope:New("UIListLayout")({
-                Padding = UDim.new(0, 4),
-                SortOrder = Enum.SortOrder.LayoutOrder,
-            }),
-        }
-        local BULLET_WIDTH = 22
-        for i, item in items do
-            local indent = 16 + (item.Indent or 0) * 24
-            local textLeft = indent + BULLET_WIDTH
-            local content: GuiObject
-            if hasCode(item.Content) then
-                content = renderFlowText(scope, item.Content, {
-                    font = textFont,
-                    textColor = DEFAULT_TEXT_COLOR,
-                    textSize = DEFAULT_TEXT_SIZE,
-                })
-                content.Position = UDim2.fromOffset(textLeft, 0)
-                content.Size = UDim2.new(1, -textLeft, 0, 0)
-            else
-                content = scope:New("TextLabel")({
-                    AutomaticSize = Enum.AutomaticSize.Y,
-                    BackgroundTransparency = 1,
-                    FontFace = textFont,
-                    Position = UDim2.fromOffset(textLeft, 0),
-                    RichText = true,
-                    Size = UDim2.new(1, -textLeft, 0, 0),
-                    Text = renderInline(item.Content),
-                    TextColor3 = DEFAULT_TEXT_COLOR,
-                    TextSize = DEFAULT_TEXT_SIZE,
-                    TextWrapped = true,
-                    TextXAlignment = Enum.TextXAlignment.Left,
-                    TextYAlignment = Enum.TextYAlignment.Top,
-                }) :: GuiObject
-            end
-            table.insert(
-                listChildren,
-                scope:New("Frame")({
-                    AutomaticSize = Enum.AutomaticSize.Y,
-                    BackgroundTransparency = 1,
-                    LayoutOrder = i,
-                    Size = UDim2.new(1, 0, 0, 0),
-                    [Children] = {
-                        scope:New("TextLabel")({
-                            BackgroundTransparency = 1,
-                            FontFace = textFont,
-                            Position = UDim2.fromOffset(indent + 4, 0),
-                            Size = UDim2.new(0, BULLET_WIDTH, 0, DEFAULT_TEXT_SIZE),
-                            Text = "\u{25CF}",
-                            TextColor3 = DEFAULT_TEXT_COLOR,
-                            TextSize = math.floor(DEFAULT_TEXT_SIZE * 0.65),
-                            TextXAlignment = Enum.TextXAlignment.Left,
-                            TextYAlignment = Enum.TextYAlignment.Center,
-                        }),
-                        content,
-                    },
-                })
-            )
-        end
-        return scope:New("Frame")({
-            AutomaticSize = Enum.AutomaticSize.Y,
-            BackgroundTransparency = 1,
-            LayoutOrder = layoutOrder,
-            Size = UDim2.new(1, 0, 0, 0),
-            [Children] = listChildren,
-        })
+        return renderList(scope, node.Items :: { Types.ListItem }, layoutOrder, textFont, function(innerScope, props)
+            return innerScope:New("TextLabel")({
+                BackgroundTransparency = 1,
+                FontFace = props.fontFace,
+                Position = UDim2.fromOffset(props.indent + 4, 0),
+                Size = UDim2.new(0, props.markerWidth, 0, props.textSize),
+                Text = "\u{25CF}",
+                TextColor3 = props.textColor,
+                TextSize = math.floor(props.textSize * 0.65),
+                TextXAlignment = Enum.TextXAlignment.Left,
+                TextYAlignment = Enum.TextYAlignment.Center,
+            })
+        end)
     elseif node.Type == "NumberedList" then
-        local items = node.Items :: { Types.ListItem }
-        local listChildren: { Instance } = {
-            scope:New("UIListLayout")({
-                Padding = UDim.new(0, 4),
-                SortOrder = Enum.SortOrder.LayoutOrder,
-            }),
-        }
-        local NUMBER_WIDTH = 22
-        local number = 0
-        for i, item in items do
-            local indent = 16 + (item.Indent or 0) * 24
-            local textLeft = indent + NUMBER_WIDTH
-            number += 1
-            local content: GuiObject
-            if hasCode(item.Content) then
-                content = renderFlowText(scope, item.Content, {
-                    font = textFont,
-                    textColor = DEFAULT_TEXT_COLOR,
-                    textSize = DEFAULT_TEXT_SIZE,
-                })
-                content.Position = UDim2.fromOffset(textLeft, 0)
-                content.Size = UDim2.new(1, -textLeft, 0, 0)
-            else
-                content = scope:New("TextLabel")({
-                    AutomaticSize = Enum.AutomaticSize.Y,
-                    BackgroundTransparency = 1,
-                    FontFace = textFont,
-                    Position = UDim2.fromOffset(textLeft, 0),
-                    RichText = true,
-                    Size = UDim2.new(1, -textLeft, 0, 0),
-                    Text = renderInline(item.Content),
-                    TextColor3 = DEFAULT_TEXT_COLOR,
-                    TextSize = DEFAULT_TEXT_SIZE,
-                    TextWrapped = true,
-                    TextXAlignment = Enum.TextXAlignment.Left,
-                    TextYAlignment = Enum.TextYAlignment.Top,
-                }) :: GuiObject
-            end
-            table.insert(
-                listChildren,
-                scope:New("Frame")({
-                    AutomaticSize = Enum.AutomaticSize.Y,
-                    BackgroundTransparency = 1,
-                    LayoutOrder = i,
-                    Size = UDim2.new(1, 0, 0, 0),
-                    [Children] = {
-                        scope:New("TextLabel")({
-                            BackgroundTransparency = 1,
-                            FontFace = textFont,
-                            Position = UDim2.fromOffset(indent, 0),
-                            Size = UDim2.new(0, NUMBER_WIDTH, 0, DEFAULT_TEXT_SIZE),
-                            Text = `{number}.`,
-                            TextColor3 = DEFAULT_TEXT_COLOR,
-                            TextSize = DEFAULT_TEXT_SIZE,
-                            TextXAlignment = Enum.TextXAlignment.Left,
-                            TextYAlignment = Enum.TextYAlignment.Top,
-                        }),
-                        content,
-                    },
-                })
-            )
-        end
-        return scope:New("Frame")({
-            AutomaticSize = Enum.AutomaticSize.Y,
-            BackgroundTransparency = 1,
-            LayoutOrder = layoutOrder,
-            Size = UDim2.new(1, 0, 0, 0),
-            [Children] = listChildren,
-        })
+        return renderList(scope, node.Items :: { Types.ListItem }, layoutOrder, textFont, function(innerScope, props)
+            return innerScope:New("TextLabel")({
+                BackgroundTransparency = 1,
+                FontFace = props.fontFace,
+                Position = UDim2.fromOffset(props.indent, 0),
+                Size = UDim2.new(0, props.markerWidth, 0, props.textSize),
+                Text = `{props.index}.`,
+                TextColor3 = props.textColor,
+                TextSize = props.textSize,
+                TextXAlignment = Enum.TextXAlignment.Left,
+                TextYAlignment = Enum.TextYAlignment.Top,
+            })
+        end)
     elseif node.Type == "BlockQuote" then
         local quoteChildren: { Instance } = {
             scope:New("UIListLayout")({

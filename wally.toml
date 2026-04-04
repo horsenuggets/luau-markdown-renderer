@@ -20,7 +20,7 @@ exclude = ["**"]
 
 [dependencies]
 Fusion = "elttob/fusion@0.3.0"
-t = "horsenuggets/t@3.1.1-horse.0.3"
+t = "horsenuggets/t@3.1.1-horse.0.4"
 
 [dev-dependencies]
-Testable = "horsenuggets/testable@1.1.2"
+Testable = "horsenuggets/testable@1.1.3"

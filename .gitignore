@@ -19,3 +19,10 @@ Packages
 sourcemap.json
 sourcemap-storybook.json
 Tools
+
+# Project
+/CONTEXT.md
+
+# Worktrees
+/.worktrees/
+/.wt/

@@ -51,6 +51,7 @@ const Luau = {
     keywords = {
         "and",
         "break",
+        "const",
         "continue",
         "do",
         "else",

@@ -39,6 +39,16 @@ return function()
             expect(string.find(result, "local")).to.be.ok()
         end)
 
+        it("should highlight const as a Luau keyword", function()
+            const result = SyntaxHighlighter.highlight("const x", "luau")
+            expect(string.find(result, "<font[^>]*>const</font>")).to.be.ok()
+        end)
+
+        it("should not highlight identifiers that start with const", function()
+            const result = SyntaxHighlighter.highlight("constant", "luau")
+            expect(string.find(result, "<font")).never.to.be.ok()
+        end)
+
         it("should highlight strings in Luau", function()
             const result = SyntaxHighlighter.highlight('"hello"', "luau")
             expect(string.find(result, "<font")).to.be.ok()

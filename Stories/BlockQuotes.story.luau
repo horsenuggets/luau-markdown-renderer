@@ -6,8 +6,8 @@ Demonstrates block quotes with nested content.
 
 --]]
 
-local dedent = require("@markdownrenderer/dedent")
-local makeStory = require("@stories/makeStory")
+const dedent = require("@markdownrenderer/dedent")
+const makeStory = require("@stories/makeStory")
 
 return makeStory(dedent([[
     ## Block Quotes

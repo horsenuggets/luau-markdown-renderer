@@ -6,12 +6,12 @@ Language grammars for data formats: JSON, TOML, and YAML.
 
 --]]
 
-local SharedConstants = require("./SharedConstants")
+const SharedConstants = require("./SharedConstants")
 
-local DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
-local SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
+const DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
+const SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
 
-local JSON = {
+const JSON = {
     keywords = { "false", "null", "true" },
     strings = {
         DOUBLE_QUOTE,
@@ -19,7 +19,7 @@ local JSON = {
     detectFunctionCalls = false,
 }
 
-local TOML = {
+const TOML = {
     keywords = { "false", "true" },
     lineComments = { "#" },
     strings = {
@@ -31,7 +31,7 @@ local TOML = {
     detectFunctionCalls = false,
 }
 
-local YAML = {
+const YAML = {
     keywords = { "false", "null", "true", "yes", "no", "on", "off" },
     lineComments = { "#" },
     strings = {

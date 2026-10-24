@@ -15,37 +15,37 @@ The layout dynamically reflows when the container is resized.
 
 --]]
 
-local Fusion = require("@packages/Fusion")
-local Types = require("./Types")
-local applyRichText = require("./applyRichText")
-local sanitize = require("./sanitize")
-local t = require("@packages/t")
+const Fusion = require("@packages/Fusion")
+const Types = require("./Types")
+const applyRichText = require("./applyRichText")
+const sanitize = require("./sanitize")
+const t = require("@packages/t")
 
-local Children = Fusion.Children
-local TextService = game:GetService("TextService")
+const Children = Fusion.Children
+const TextService = game:GetService("TextService")
 
-local CODE_BACKGROUND = Color3.fromRGB(50, 50, 50)
-local CODE_CORNER_RADIUS = UDim.new(0, 4)
-local CODE_MARGIN_X = 2
-local CODE_PADDING_X = 4
-local CODE_TEXT_SIZE = 14
-local LINE_SPACING = 2
-local MONO_FONT = Font.new("rbxasset://fonts/families/RobotoMono.json")
+const CODE_BACKGROUND = Color3.fromRGB(50, 50, 50)
+const CODE_CORNER_RADIUS = UDim.new(0, 4)
+const CODE_MARGIN_X = 2
+const CODE_PADDING_X = 4
+const CODE_TEXT_SIZE = 14
+const LINE_SPACING = 2
+const MONO_FONT = Font.new("rbxasset://fonts/families/RobotoMono.json")
 
-local function measureText(text: string, font: Font, textSize: number): Vector2
-    local params = Instance.new("GetTextBoundsParams")
+const function measureText(text: string, font: Font, textSize: number): Vector2
+    const params = Instance.new("GetTextBoundsParams")
     params.Text = text
     params.Font = font
     params.Size = textSize
     params.Width = math.huge
-    local bounds = TextService:GetTextBoundsAsync(params)
+    const bounds = TextService:GetTextBoundsAsync(params)
     return bounds
 end
 
 -- Split text into words, preserving leading and trailing
 -- whitespace by attaching spaces to adjacent words.
-local function splitIntoWords(text: string): { string }
-    local words = {}
+const function splitIntoWords(text: string): { string }
+    const words = {}
     for word in string.gmatch(text, "%s*%S+%s*") do
         table.insert(words, word)
     end
@@ -84,7 +84,7 @@ type FlowConfig = {
 -- Distribute code group words into pre-allocated pill frames
 -- based on available width. Each pill gets the words that fit on
 -- one line. Unused pills are hidden.
-local function flushPill(
+const function flushPill(
     pill: Frame,
     words: { string },
     width: number,
@@ -96,39 +96,39 @@ local function flushPill(
 )
     -- Trim leading space from first word, trailing space from
     -- last word for clean pill text
-    local trimmedWords = table.clone(words)
+    const trimmedWords = table.clone(words)
     trimmedWords[1] = string.gsub(trimmedWords[1], "^%s+", "")
     trimmedWords[#trimmedWords] = string.gsub(trimmedWords[#trimmedWords], "%s+$", "")
-    local text = table.concat(trimmedWords)
+    const text = table.concat(trimmedWords)
 
     -- Measure trimmed text for accurate pill width
-    local params = Instance.new("GetTextBoundsParams")
+    const params = Instance.new("GetTextBoundsParams")
     params.Text = text
     params.Font = font
     params.Size = fontSize
     params.Width = math.huge
-    local bounds = TextService:GetTextBoundsAsync(params)
-    local pillWidth = math.ceil(bounds.X) + CODE_PADDING_X * 2
+    const bounds = TextService:GetTextBoundsAsync(params)
+    const pillWidth = math.ceil(bounds.X) + CODE_PADDING_X * 2
 
     pill.Visible = true
     pill.Size = UDim2.fromOffset(pillWidth, height)
     pill.Position = UDim2.fromOffset(x, y)
-    local label = pill:FindFirstChildOfClass("TextLabel")
+    const label = pill:FindFirstChildOfClass("TextLabel")
     if label then
         label.Text = text
     end
     return pillWidth
 end
 
-local function reflowCodeGroup(group: CodeGroup, startX: number, startY: number, containerWidth: number)
-    local margin = CODE_MARGIN_X
+const function reflowCodeGroup(group: CodeGroup, startX: number, startY: number, containerWidth: number)
+    const margin = CODE_MARGIN_X
     local pillX = startX + margin
     local availWidth = containerWidth - pillX - margin
     local pillIdx = 1
     local lineWords: { string } = {}
     local lineWidth = 0
     local cursorY = startY
-    local totalHeight = group.height
+    const totalHeight = group.height
     local lastPillWidth = 0
 
     for _, word in group.words do
@@ -174,34 +174,34 @@ local function reflowCodeGroup(group: CodeGroup, startX: number, startY: number,
         group.pills[i].Visible = false
     end
 
-    local endX = if cursorY == startY then startX + lastPillWidth + margin else lastPillWidth + margin
+    const endX = if cursorY == startY then startX + lastPillWidth + margin else lastPillWidth + margin
     return endX, cursorY
 end
 
 -- Reposition all flow items based on the given container width.
 -- Returns the total height of the reflowed content.
-local function reflow(items: { FlowItem }, containerWidth: number, lineHeight: number, baseTextSize: number): number
+const function reflow(items: { FlowItem }, containerWidth: number, lineHeight: number, baseTextSize: number): number
     local cursorX = 0
     local cursorY = 0
     local lastLineHeight = baseTextSize
 
     for _, item in items do
         if item.codeGroup then
-            local lastWidth, lastY = reflowCodeGroup(item.codeGroup, cursorX, cursorY, containerWidth)
+            const lastWidth, lastY = reflowCodeGroup(item.codeGroup, cursorX, cursorY, containerWidth)
             cursorX = lastWidth
             if lastY > cursorY then
                 lastLineHeight = item.codeGroup.height
             end
             cursorY = lastY
         else
-            local actualWidth = item.element.AbsoluteSize.X
-            local itemWidth = if actualWidth > 0 then actualWidth else item.width
+            const actualWidth = item.element.AbsoluteSize.X
+            const itemWidth = if actualWidth > 0 then actualWidth else item.width
             if cursorX > 0 and cursorX + itemWidth > containerWidth then
                 cursorX = 0
                 cursorY += lineHeight
                 lastLineHeight = baseTextSize
             end
-            local margin = item.margin or 0
+            const margin = item.margin or 0
             item.element.Position = UDim2.fromOffset(cursorX + margin, cursorY)
             cursorX += itemWidth
         end
@@ -210,7 +210,7 @@ local function reflow(items: { FlowItem }, containerWidth: number, lineHeight: n
     return cursorY + lastLineHeight
 end
 
-local function renderFlowText(
+const function renderFlowText(
     scope: Fusion.Scope<typeof(Fusion)>,
     spans: { Types.InlineSpan },
     config: FlowConfig
@@ -222,30 +222,30 @@ local function renderFlowText(
         textColor = t.Color3,
         textSize = t.number,
     })(config))
-    local baseFont = config.font
-    local textColor = config.textColor
-    local textSize = config.textSize
-    local lineHeight = textSize + LINE_SPACING
+    const baseFont = config.font
+    const textColor = config.textColor
+    const textSize = config.textSize
+    const lineHeight = textSize + LINE_SPACING
 
-    local items: { FlowItem } = {}
-    local elements: { Instance } = {}
+    const items: { FlowItem } = {}
+    const elements: { Instance } = {}
     local order = 0
 
     for _, span in spans do
-        local isCode = span.Code == true
-        local font = if isCode then MONO_FONT else baseFont
-        local spanTextSize = if isCode then CODE_TEXT_SIZE else textSize
-        local text = span.Text
+        const isCode = span.Code == true
+        const font = if isCode then MONO_FONT else baseFont
+        const spanTextSize = if isCode then CODE_TEXT_SIZE else textSize
+        const text = span.Text
 
         if isCode then
             -- Measure each word individually for line-breaking
-            local codeWords = splitIntoWords(text)
-            local wordData: { CodeWord } = {}
+            const codeWords = splitIntoWords(text)
+            const wordData: { CodeWord } = {}
             local totalTextWidth = 0
             local pillHeight = 0
             for _, word in codeWords do
-                local bounds = measureText(word, font, spanTextSize)
-                local w = math.ceil(bounds.X)
+                const bounds = measureText(word, font, spanTextSize)
+                const w = math.ceil(bounds.X)
                 table.insert(wordData, { text = word, width = w })
                 totalTextWidth += w
                 if bounds.Y + 4 > pillHeight then
@@ -256,11 +256,11 @@ local function renderFlowText(
             -- Pre-allocate pill frames (one per potential line,
             -- max 8). During reflow, words are distributed across
             -- pills and unused ones are hidden.
-            local MAX_PILLS = 8
-            local pills: { Frame } = {}
+            const MAX_PILLS = 8
+            const pills: { Frame } = {}
             for pillIdx = 1, MAX_PILLS do
                 order += 1
-                local pill = scope:New("Frame")({
+                const pill = scope:New("Frame")({
                     BackgroundColor3 = CODE_BACKGROUND,
                     LayoutOrder = order,
                     Name = string.format("Code_%04d", order),
@@ -288,7 +288,7 @@ local function renderFlowText(
             end
 
             -- Single flow item represents the entire code group
-            local fullWidth = totalTextWidth + CODE_PADDING_X * 2 + CODE_MARGIN_X * 2
+            const fullWidth = totalTextWidth + CODE_PADDING_X * 2 + CODE_MARGIN_X * 2
             table.insert(items, {
                 codeGroup = {
                     font = font,
@@ -301,15 +301,15 @@ local function renderFlowText(
                 width = fullWidth,
             })
         else
-            local words = splitIntoWords(text)
+            const words = splitIntoWords(text)
 
             for _, word in words do
-                local richWord = applyRichText(sanitize(word), span)
-                local bounds = measureText(word, font, spanTextSize)
-                local wordWidth = math.ceil(bounds.X)
+                const richWord = applyRichText(sanitize(word), span)
+                const bounds = measureText(word, font, spanTextSize)
+                const wordWidth = math.ceil(bounds.X)
 
                 order += 1
-                local label = scope:New("TextLabel")({
+                const label = scope:New("TextLabel")({
                     BackgroundTransparency = 1,
                     FontFace = font,
                     LayoutOrder = order,
@@ -328,26 +328,26 @@ local function renderFlowText(
         end
     end
 
-    local container = scope:New("Frame")({
+    const container = scope:New("Frame")({
         BackgroundTransparency = 1,
         Name = "FlowText",
         Size = UDim2.new(1, 0, 0, 0),
         [Children] = elements,
     }) :: Frame
 
-    local function onResize()
-        local containerWidth = container.AbsoluteSize.X
+    const function onResize()
+        const containerWidth = container.AbsoluteSize.X
         if containerWidth <= 0 then
             return
         end
-        local totalHeight = reflow(items, containerWidth, lineHeight, textSize)
+        const totalHeight = reflow(items, containerWidth, lineHeight, textSize)
         container.Size = UDim2.new(1, 0, 0, totalHeight)
     end
 
     -- Listen for container width changes (e.g. window resize)
     local lastWidth = 0
     container:GetPropertyChangedSignal("AbsoluteSize"):Connect(function()
-        local newWidth = container.AbsoluteSize.X
+        const newWidth = container.AbsoluteSize.X
         if newWidth ~= lastWidth and newWidth > 0 then
             lastWidth = newWidth
             onResize()

@@ -8,7 +8,7 @@ and renderer modules.
 
 --]]
 
-local Types = {}
+const Types = {}
 
 export type InlineSpan = {
     Text: string,

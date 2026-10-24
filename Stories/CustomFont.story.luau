@@ -7,11 +7,11 @@ of the default Source Sans Pro.
 
 --]]
 
-local Fusion = require("@packages/Fusion")
-local MarkdownRenderer = require("@markdownrenderer")
-local dedent = require("@markdownrenderer/dedent")
+const Fusion = require("@packages/Fusion")
+const MarkdownRenderer = require("@markdownrenderer")
+const dedent = require("@markdownrenderer/dedent")
 
-local SOURCE = dedent([[
+const SOURCE = dedent([[
     # Custom Font Demo
 
     This story uses **FredokaOne** as the base font instead of
@@ -27,7 +27,7 @@ local SOURCE = dedent([[
     ## Code Block
 
     ```luau
-    local function hello(name: string)
+    const function hello(name: string)
         print(`Hello, {name}!`)
     end
     ```
@@ -44,9 +44,9 @@ local SOURCE = dedent([[
 return {
     fusion = Fusion,
     story = function(props)
-        local scope = props.scope
+        const scope = props.scope
 
-        local ui = MarkdownRenderer.render(scope, {
+        const ui = MarkdownRenderer.render(scope, {
             Source = SOURCE,
             Font = Font.new("rbxasset://fonts/families/FredokaOne.json"),
             HeadingFont = Font.new("rbxasset://fonts/families/FredokaOne.json"),

@@ -7,9 +7,9 @@ strikethrough based on the formatting flags in an InlineSpan.
 
 --]]
 
-local Types = require("./Types")
+const Types = require("./Types")
 
-local function applyRichText(text: string, span: Types.InlineSpan): string
+const function applyRichText(text: string, span: Types.InlineSpan): string
     if span.Bold then
         text = `<b>{text}</b>`
     end

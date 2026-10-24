@@ -7,10 +7,10 @@ language grammar files.
 
 --]]
 
-local C_COMMENTS = { { "/*", "*/" } }
-local C_LINE_COMMENTS = { "//" }
-local DOUBLE_QUOTE = { open = '"', close = '"' }
-local SINGLE_QUOTE = { open = "'", close = "'" }
+const C_COMMENTS = { { "/*", "*/" } }
+const C_LINE_COMMENTS = { "//" }
+const DOUBLE_QUOTE = { open = '"', close = '"' }
+const SINGLE_QUOTE = { open = "'", close = "'" }
 
 return {
     C_COMMENTS = C_COMMENTS,

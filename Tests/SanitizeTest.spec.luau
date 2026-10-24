@@ -6,7 +6,7 @@ Tests for the HTML entity sanitization function.
 
 --]]
 
-local sanitize = require("@markdownrenderer/sanitize")
+const sanitize = require("@markdownrenderer/sanitize")
 
 return function()
     it("should escape ampersands", function()

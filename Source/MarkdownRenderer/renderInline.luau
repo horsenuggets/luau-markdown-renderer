@@ -8,14 +8,14 @@ the appropriate RichText XML tags.
 
 --]]
 
-local Types = require("./Types")
-local applyRichText = require("./applyRichText")
-local sanitize = require("./sanitize")
-local t = require("@packages/t")
+const Types = require("./Types")
+const applyRichText = require("./applyRichText")
+const sanitize = require("./sanitize")
+const t = require("@packages/t")
 
-local function renderInline(spans: { Types.InlineSpan }): string
+const function renderInline(spans: { Types.InlineSpan }): string
     assert(t.array(t.table)(spans))
-    local parts: { string } = {}
+    const parts: { string } = {}
     for _, span in spans do
         local text = sanitize(span.Text)
         if span.Code then

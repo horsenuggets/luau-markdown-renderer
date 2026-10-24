@@ -1,10 +1,11 @@
 {
     "aliases": {
         "devpackages": "./DevPackages/",
-        "lune": "~/.lune/.typedefs/0.10.4-horse.14.5/",
+        "lune": "~/.lune/.typedefs/0.11.1-horse.16.1/",
         "markdownrenderer": "./Source/MarkdownRenderer/",
         "packages": "./Packages/",
         "stories": "./Stories/",
+        "submodules": "./Submodules/",
         "tests": "./Tests/"
     },
     "globals": [
@@ -19,6 +20,7 @@
         "fdescribe",
         "fit",
         "it",
+        "project",
         "xdescribe",
         "xit"
     ]

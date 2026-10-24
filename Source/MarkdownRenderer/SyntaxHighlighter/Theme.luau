@@ -7,10 +7,10 @@ token types to hex color strings for use in RichText font tags.
 
 --]]
 
-local Types = require("./Types")
-local t = require("@packages/t")
+const Types = require("./Types")
+const t = require("@packages/t")
 
-local THEMES: { [string]: Types.Theme } = {
+const THEMES: { [string]: Types.Theme } = {
     ["github-dark"] = {
         builtin = "#ffa657",
         comment = "#8b949e",
@@ -61,9 +61,9 @@ local THEMES: { [string]: Types.Theme } = {
     },
 }
 
-local DEFAULT_THEME = "github-dark"
+const DEFAULT_THEME = "github-dark"
 
-local Theme = {}
+const Theme = {}
 
 function Theme.get(name: string?): Types.Theme
     assert(t.optional(t.string)(name))
@@ -71,7 +71,7 @@ function Theme.get(name: string?): Types.Theme
 end
 
 function Theme.list(): { string }
-    local names = {}
+    const names = {}
     for name in THEMES do
         table.insert(names, name)
     end

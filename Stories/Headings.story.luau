@@ -7,8 +7,8 @@ rendering.
 
 --]]
 
-local dedent = require("@markdownrenderer/dedent")
-local makeStory = require("@stories/makeStory")
+const dedent = require("@markdownrenderer/dedent")
+const makeStory = require("@stories/makeStory")
 
 return makeStory(dedent([[
     # Heading Level 1

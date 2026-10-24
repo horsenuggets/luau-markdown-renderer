@@ -7,9 +7,9 @@ strings. Converts &, <, >, and " to their entity equivalents.
 
 --]]
 
-local t = require("@packages/t")
+const t = require("@packages/t")
 
-local function sanitize(text: string): string
+const function sanitize(text: string): string
     assert(t.string(text))
     text = string.gsub(text, "&", "&amp;")
     text = string.gsub(text, "<", "&lt;")

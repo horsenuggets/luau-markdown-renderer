@@ -9,23 +9,23 @@ formatting (bold, italic, strikethrough, inline code).
 
 --]]
 
-local Types = require("./Types")
-local t = require("@packages/t")
+const Types = require("./Types")
+const t = require("@packages/t")
 
-local Parser = {}
+const Parser = {}
 
-local function parseInline(text: string): { Types.InlineSpan }
+const function parseInline(text: string): { Types.InlineSpan }
     assert(t.string(text))
-    local spans: { Types.InlineSpan } = {}
+    const spans: { Types.InlineSpan } = {}
     local pos = 1
-    local len = #text
+    const len = #text
     local current = ""
     local bold = false
     local italic = false
     local strikethrough = false
     local code = false
 
-    local function flush()
+    const function flush()
         if current ~= "" then
             table.insert(spans, {
                 Text = current,
@@ -78,12 +78,12 @@ local function parseInline(text: string): { Types.InlineSpan }
     return spans
 end
 
-local function isHorizontalRule(line: string): boolean
-    local stripped = string.gsub(line, "%s", "")
+const function isHorizontalRule(line: string): boolean
+    const stripped = string.gsub(line, "%s", "")
     if #stripped < 3 then
         return false
     end
-    local char = string.sub(stripped, 1, 1)
+    const char = string.sub(stripped, 1, 1)
     if char ~= "-" and char ~= "*" and char ~= "_" then
         return false
     end
@@ -95,7 +95,7 @@ local function isHorizontalRule(line: string): boolean
     return true
 end
 
-local function countLeadingSpaces(line: string): number
+const function countLeadingSpaces(line: string): number
     local count = 0
     for i = 1, #line do
         if string.sub(line, i, i) == " " then
@@ -109,46 +109,46 @@ local function countLeadingSpaces(line: string): number
     return count
 end
 
-local function stripBlockQuotePrefix(line: string): string
-    local result = string.match(line, "^%s*> ?(.*)")
+const function stripBlockQuotePrefix(line: string): string
+    const result = string.match(line, "^%s*> ?(.*)")
     return result or line
 end
 
-local function isBlockQuoteLine(line: string): boolean
+const function isBlockQuoteLine(line: string): boolean
     return string.match(line, "^%s*>") ~= nil
 end
 
-local function parseHeading(line: string): (number?, string?)
-    local hashes, rest = string.match(line, "^(#+) (.+)")
+const function parseHeading(line: string): (number?, string?)
+    const hashes, rest = string.match(line, "^(#+) (.+)")
     if not hashes or not rest then
         return nil, nil
     end
-    local level = #hashes
+    const level = #hashes
     if level < 1 or level > 6 then
         return nil, nil
     end
     return level, rest
 end
 
-local function parseBlocks(lines: { string }): { Types.BlockNode }
-    local nodes: { Types.BlockNode } = {}
+const function parseBlocks(lines: { string }): { Types.BlockNode }
+    const nodes: { Types.BlockNode } = {}
     local pos = 1
-    local lineCount = #lines
+    const lineCount = #lines
 
-    local function skipBlankLines()
+    const function skipBlankLines()
         while pos <= lineCount and string.match(lines[pos], "^%s*$") do
             pos += 1
         end
     end
 
-    local function collectParagraphLines(): { string }
-        local collected: { string } = {}
+    const function collectParagraphLines(): { string }
+        const collected: { string } = {}
         while pos <= lineCount do
-            local line = lines[pos]
+            const line = lines[pos]
             if string.match(line, "^%s*$") then
                 break
             end
-            local hLevel = parseHeading(line)
+            const hLevel = parseHeading(line)
             if hLevel then
                 break
             end
@@ -179,10 +179,10 @@ local function parseBlocks(lines: { string }): { Types.BlockNode }
             break
         end
 
-        local line = lines[pos]
+        const line = lines[pos]
 
         -- Headings
-        local headingLevel, headingText = parseHeading(line)
+        const headingLevel, headingText = parseHeading(line)
         if headingLevel and headingText then
             table.insert(nodes, {
                 Type = "Heading",
@@ -194,10 +194,10 @@ local function parseBlocks(lines: { string }): { Types.BlockNode }
         end
 
         -- Code blocks
-        local codeLang = string.match(line, "^```(.*)")
+        const codeLang = string.match(line, "^```(.*)")
         if codeLang then
             pos += 1
-            local codeLines: { string } = {}
+            const codeLines: { string } = {}
             while pos <= lineCount do
                 if string.match(lines[pos], "^```%s*$") then
                     pos += 1
@@ -229,7 +229,7 @@ local function parseBlocks(lines: { string }): { Types.BlockNode }
 
         -- Block quotes
         if isBlockQuoteLine(line) then
-            local quoteLines: { string } = {}
+            const quoteLines: { string } = {}
             while pos <= lineCount and isBlockQuoteLine(lines[pos]) do
                 table.insert(quoteLines, stripBlockQuotePrefix(lines[pos]))
                 pos += 1
@@ -242,16 +242,16 @@ local function parseBlocks(lines: { string }): { Types.BlockNode }
         end
 
         -- Bullet lists
-        local bulletMatch = string.match(line, "^%s*[-*+] ")
+        const bulletMatch = string.match(line, "^%s*[-*+] ")
         if bulletMatch then
-            local items: { Types.ListItem } = {}
+            const items: { Types.ListItem } = {}
             while pos <= lineCount do
-                local currentLine = lines[pos]
-                local spaces, itemText = string.match(currentLine, "^(%s*)[-*+] (.+)")
+                const currentLine = lines[pos]
+                const spaces, itemText = string.match(currentLine, "^(%s*)[-*+] (.+)")
                 if not spaces or not itemText then
                     break
                 end
-                local indent = math.floor(countLeadingSpaces(spaces) / 2)
+                const indent = math.floor(countLeadingSpaces(spaces) / 2)
                 table.insert(items, {
                     Content = parseInline(itemText),
                     Indent = indent,
@@ -266,16 +266,16 @@ local function parseBlocks(lines: { string }): { Types.BlockNode }
         end
 
         -- Numbered lists
-        local numberedMatch = string.match(line, "^%s*%d+%. ")
+        const numberedMatch = string.match(line, "^%s*%d+%. ")
         if numberedMatch then
-            local items: { Types.ListItem } = {}
+            const items: { Types.ListItem } = {}
             while pos <= lineCount do
-                local currentLine = lines[pos]
-                local spaces, itemText = string.match(currentLine, "^(%s*)%d+%. (.+)")
+                const currentLine = lines[pos]
+                const spaces, itemText = string.match(currentLine, "^(%s*)%d+%. (.+)")
                 if not spaces or not itemText then
                     break
                 end
-                local indent = math.floor(countLeadingSpaces(spaces) / 2)
+                const indent = math.floor(countLeadingSpaces(spaces) / 2)
                 table.insert(items, {
                     Content = parseInline(itemText),
                     Indent = indent,
@@ -290,9 +290,9 @@ local function parseBlocks(lines: { string }): { Types.BlockNode }
         end
 
         -- Paragraphs (default)
-        local paragraphLines = collectParagraphLines()
+        const paragraphLines = collectParagraphLines()
         if #paragraphLines > 0 then
-            local text = table.concat(paragraphLines, " ")
+            const text = table.concat(paragraphLines, " ")
             table.insert(nodes, {
                 Type = "Paragraph",
                 Content = parseInline(text),
@@ -307,7 +307,7 @@ end
 
 function Parser.parse(source: string): { Types.BlockNode }
     assert(t.string(source))
-    local lines = string.split(source, "\n")
+    const lines = string.split(source, "\n")
     return parseBlocks(lines)
 end
 

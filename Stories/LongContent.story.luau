@@ -8,8 +8,8 @@ start, not the bullet or number prefix.
 
 --]]
 
-local dedent = require("@markdownrenderer/dedent")
-local makeStory = require("@stories/makeStory")
+const dedent = require("@markdownrenderer/dedent")
+const makeStory = require("@stories/makeStory")
 
 return makeStory(dedent([[
     ## Long List Items

@@ -10,22 +10,22 @@ that many characters from the start of every line.
 
 --]]
 
-local t = require("@packages/t")
+const t = require("@packages/t")
 
-local function dedent(text: string): string
+const function dedent(text: string): string
     assert(t.string(text))
     -- Remove a single leading newline and trailing whitespace
     text = text:gsub("^\n", "")
     text = text:gsub("%s+$", "")
 
     -- Find the indentation of the first non-empty line
-    local indent = text:match("^(%s+)")
+    const indent = text:match("^(%s+)")
     if not indent then
         return text
     end
 
     -- Remove that indentation from every line
-    local pattern = "\n" .. indent
+    const pattern = "\n" .. indent
     text = text:gsub("^" .. indent, "")
     text = text:gsub(pattern, "\n")
 

@@ -7,12 +7,12 @@ PHP, and Elixir.
 
 --]]
 
-local SharedConstants = require("./SharedConstants")
+const SharedConstants = require("./SharedConstants")
 
-local DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
-local SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
+const DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
+const SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
 
-local Lua = {
+const Lua = {
     blockComments = { { "--[[", "]]" } },
     keywords = {
         "and",
@@ -46,11 +46,12 @@ local Lua = {
     },
 }
 
-local Luau = {
+const Luau = {
     blockComments = { { "--[[", "]]" } },
     keywords = {
         "and",
         "break",
+        "const",
         "continue",
         "do",
         "else",
@@ -95,7 +96,7 @@ local Luau = {
     },
 }
 
-local Python = {
+const Python = {
     builtins = {
         "abs",
         "all",
@@ -202,7 +203,7 @@ local Python = {
     },
 }
 
-local Ruby = {
+const Ruby = {
     builtins = {
         "attr_accessor",
         "attr_reader",
@@ -264,7 +265,7 @@ local Ruby = {
     },
 }
 
-local PHP = {
+const PHP = {
     blockComments = { { "/*", "*/" } },
     builtins = {
         "array",
@@ -360,7 +361,7 @@ local PHP = {
     },
 }
 
-local Elixir = {
+const Elixir = {
     builtins = {
         "hd",
         "inspect",

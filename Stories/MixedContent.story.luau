@@ -7,8 +7,8 @@ elements.
 
 --]]
 
-local dedent = require("@markdownrenderer/dedent")
-local makeStory = require("@stories/makeStory")
+const dedent = require("@markdownrenderer/dedent")
+const makeStory = require("@stories/makeStory")
 
 return makeStory(dedent([[
     # luau-markdown-renderer
@@ -34,9 +34,9 @@ return makeStory(dedent([[
     ## Usage
 
     ```luau
-    local MarkdownRenderer = require("@packages/MarkdownRenderer")
+    const MarkdownRenderer = require("@packages/MarkdownRenderer")
 
-    local ui = MarkdownRenderer(scope, {
+    const ui = MarkdownRenderer(scope, {
         Source = "# Hello\n\nWorld",
     })
     ```

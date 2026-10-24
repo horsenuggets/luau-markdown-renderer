@@ -7,15 +7,15 @@ TSX, CSS, HTML, and XML.
 
 --]]
 
-local SharedConstants = require("./SharedConstants")
+const SharedConstants = require("./SharedConstants")
 
-local C_COMMENTS = SharedConstants.C_COMMENTS
-local C_LINE_COMMENTS = SharedConstants.C_LINE_COMMENTS
-local DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
-local SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
-local TEMPLATE_LITERAL = { open = "`", close = "`", multiline = true }
+const C_COMMENTS = SharedConstants.C_COMMENTS
+const C_LINE_COMMENTS = SharedConstants.C_LINE_COMMENTS
+const DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
+const SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
+const TEMPLATE_LITERAL = { open = "`", close = "`", multiline = true }
 
-local JavaScript = {
+const JavaScript = {
     blockComments = C_COMMENTS,
     builtins = {
         "Array",
@@ -112,7 +112,7 @@ local JavaScript = {
     },
 }
 
-local TypeScript = {
+const TypeScript = {
     blockComments = C_COMMENTS,
     builtins = {
         "Array",
@@ -256,7 +256,7 @@ local TypeScript = {
     },
 }
 
-local CSS = {
+const CSS = {
     blockComments = C_COMMENTS,
     keywords = {
         "!important",
@@ -281,7 +281,7 @@ local CSS = {
     detectFunctionCalls = false,
 }
 
-local HTML = {
+const HTML = {
     blockComments = { { "<!--", "-->" } },
     keywords = {
         "a",
@@ -347,7 +347,7 @@ local HTML = {
     htmlTags = true,
 }
 
-local XML = {
+const XML = {
     blockComments = { { "<!--", "-->" } },
     strings = {
         DOUBLE_QUOTE,

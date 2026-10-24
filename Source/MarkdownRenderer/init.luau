@@ -48,6 +48,15 @@ type MarkerProps = {
     textSize: number,
 }
 
+local function hasCode(spans: { Types.InlineSpan }): boolean
+    for _, span in spans do
+        if span.Code then
+            return true
+        end
+    end
+    return false
+end
+
 local function renderList(
     scope: Fusion.Scope<typeof(Fusion)>,
     items: { Types.ListItem },
@@ -119,15 +128,6 @@ local function renderList(
         Size = UDim2.new(1, 0, 0, 0),
         [Children] = listChildren,
     })
-end
-
-local function hasCode(spans: { Types.InlineSpan }): boolean
-    for _, span in spans do
-        if span.Code then
-            return true
-        end
-    end
-    return false
 end
 
 local function renderBlock(

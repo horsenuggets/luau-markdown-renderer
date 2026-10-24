@@ -15,7 +15,7 @@ local Scripting = require("@self/Scripting")
 local Shell = require("@self/Shell")
 local WebJS = require("@self/WebJS")
 
-local Types = require("@self/../Types")
+local Types = require("@markdownrenderer/SyntaxHighlighter/Types")
 local t = require("@packages/t")
 
 local registry: { [string]: Types.LanguageGrammar } = {}

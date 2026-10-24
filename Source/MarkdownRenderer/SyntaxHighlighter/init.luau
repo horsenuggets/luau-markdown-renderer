@@ -8,28 +8,28 @@ tags matching the selected theme.
 
 --]]
 
-local Languages = require("@self/Languages")
-local Theme = require("@self/Theme")
-local Tokenizer = require("@self/Tokenizer")
-local t = require("@packages/t")
+const Languages = require("@self/Languages")
+const Theme = require("@self/Theme")
+const Tokenizer = require("@self/Tokenizer")
+const t = require("@packages/t")
 
-local sanitize = require("@markdownrenderer/sanitize")
+const sanitize = require("@markdownrenderer/sanitize")
 
-local DIFF_ALIASES = { diff = true, patch = true }
+const DIFF_ALIASES = { diff = true, patch = true }
 
 -- Diff is line-based: + lines are green (string), - lines are
 -- red (keyword), @@ lines are purple (function_call), and
 -- everything else is normal.
-local function highlightDiff(code: string, themeName: string?): string
+const function highlightDiff(code: string, themeName: string?): string
     assert(t.string(code))
     assert(t.optional(t.string)(themeName))
-    local theme = Theme.get(themeName)
-    local parts: { string } = {}
+    const theme = Theme.get(themeName)
+    const parts: { string } = {}
 
     for line in string.gmatch(code .. "\n", "(.-)\n") do
-        local sanitized = sanitize(line)
-        local prefix = string.sub(line, 1, 1)
-        local prefix2 = string.sub(line, 1, 2)
+        const sanitized = sanitize(line)
+        const prefix = string.sub(line, 1, 1)
+        const prefix2 = string.sub(line, 1, 2)
 
         if prefix2 == "@@" then
             table.insert(parts, `<font color="{theme.function_call}">{sanitized}</font>`)
@@ -51,7 +51,7 @@ local function highlightDiff(code: string, themeName: string?): string
     return table.concat(parts)
 end
 
-local function highlight(code: string, language: string?, themeName: string?): string
+const function highlight(code: string, language: string?, themeName: string?): string
     assert(t.string(code))
     assert(t.optional(t.string)(language))
     assert(t.optional(t.string)(themeName))
@@ -63,20 +63,20 @@ local function highlight(code: string, language: string?, themeName: string?): s
         return highlightDiff(code, themeName)
     end
 
-    local grammar = Languages.get(language)
+    const grammar = Languages.get(language)
     if not grammar then
         return sanitize(code)
     end
 
-    local theme = Theme.get(themeName)
-    local tokens = Tokenizer.tokenize(code, grammar)
-    local parts: { string } = {}
+    const theme = Theme.get(themeName)
+    const tokens = Tokenizer.tokenize(code, grammar)
+    const parts: { string } = {}
 
     local lastColor: string? = nil
 
     for _, token in tokens do
-        local color = (theme :: any)[token.type] :: string
-        local text = sanitize(token.text)
+        const color = (theme :: any)[token.type] :: string
+        const text = sanitize(token.text)
 
         if color == theme.normal then
             -- Normal text doesn't need a font tag
@@ -105,7 +105,7 @@ local function highlight(code: string, language: string?, themeName: string?): s
     return table.concat(parts)
 end
 
-local SyntaxHighlighter = {}
+const SyntaxHighlighter = {}
 SyntaxHighlighter.Languages = Languages
 SyntaxHighlighter.Theme = Theme
 SyntaxHighlighter.highlight = highlight

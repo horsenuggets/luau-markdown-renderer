@@ -6,12 +6,12 @@ Language grammars for shell and query languages: Bash/sh and SQL.
 
 --]]
 
-local SharedConstants = require("./SharedConstants")
+const SharedConstants = require("./SharedConstants")
 
-local DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
-local SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
+const DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
+const SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
 
-local Bash = {
+const Bash = {
     builtins = {
         "alias",
         "bg",
@@ -74,7 +74,7 @@ local Bash = {
     operators = "+-*/%=<>!&|^~?:$",
 }
 
-local SQL = {
+const SQL = {
     blockComments = { { "/*", "*/" } },
     keywords = {
         "ADD",

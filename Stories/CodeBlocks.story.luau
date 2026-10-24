@@ -6,8 +6,8 @@ Demonstrates fenced code blocks with and without language tags.
 
 --]]
 
-local dedent = require("@markdownrenderer/dedent")
-local makeStory = require("@stories/makeStory")
+const dedent = require("@markdownrenderer/dedent")
+const makeStory = require("@stories/makeStory")
 
 return makeStory(dedent([[
     ## Code Examples
@@ -15,7 +15,7 @@ return makeStory(dedent([[
     A Luau code block:
 
     ```luau
-    local function greet(name: string)
+    const function greet(name: string)
         print(`Hello, {name}!`)
     end
 

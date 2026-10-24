@@ -8,16 +8,16 @@ padding on each side.
 
 --]]
 
-local Fusion = require("@packages/Fusion")
-local MarkdownRenderer = require("@markdownrenderer")
+const Fusion = require("@packages/Fusion")
+const MarkdownRenderer = require("@markdownrenderer")
 
-local function makeStory(source: string)
+const function makeStory(source: string)
     return {
         fusion = Fusion,
         story = function(props)
-            local scope = props.scope
+            const scope = props.scope
 
-            local ui = MarkdownRenderer.render(scope, {
+            const ui = MarkdownRenderer.render(scope, {
                 Source = source,
             })
             ui.AnchorPoint = Vector2.new(0.5, 0.5)

@@ -6,12 +6,12 @@ Language grammars for Haskell and Markdown.
 
 --]]
 
-local SharedConstants = require("./SharedConstants")
+const SharedConstants = require("./SharedConstants")
 
-local DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
-local SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
+const DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
+const SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
 
-local Haskell = {
+const Haskell = {
     blockComments = { { "{-", "-}" } },
     builtins = {
         "abs",
@@ -121,7 +121,7 @@ local Haskell = {
     uppercaseTypes = true,
 }
 
-local Markdown = {
+const Markdown = {
     keywords = {},
     strings = {},
     detectFunctionCalls = false,
@@ -131,7 +131,7 @@ local Markdown = {
 -- The grammar is minimal — actual coloring is handled by the
 -- SyntaxHighlighter init module which checks for "diff" language
 -- and applies line-based coloring directly.
-local Diff = {
+const Diff = {
     keywords = {},
     strings = {},
     detectFunctionCalls = false,

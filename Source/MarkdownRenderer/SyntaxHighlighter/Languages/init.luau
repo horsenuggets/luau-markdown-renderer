@@ -8,19 +8,19 @@ lookup table.
 
 --]]
 
-local CFamily = require("@self/CFamily")
-local Data = require("@self/Data")
-local Other = require("@self/Other")
-local Scripting = require("@self/Scripting")
-local Shell = require("@self/Shell")
-local WebJS = require("@self/WebJS")
+const CFamily = require("@self/CFamily")
+const Data = require("@self/Data")
+const Other = require("@self/Other")
+const Scripting = require("@self/Scripting")
+const Shell = require("@self/Shell")
+const WebJS = require("@self/WebJS")
 
-local Types = require("@markdownrenderer/SyntaxHighlighter/Types")
-local t = require("@packages/t")
+const Types = require("@markdownrenderer/SyntaxHighlighter/Types")
+const t = require("@packages/t")
 
-local registry: { [string]: Types.LanguageGrammar } = {}
+const registry: { [string]: Types.LanguageGrammar } = {}
 
-local function registerFamily(family: { { aliases: { string }, grammar: Types.LanguageGrammar } })
+const function registerFamily(family: { { aliases: { string }, grammar: Types.LanguageGrammar } })
     for _, entry in family do
         for _, alias in entry.aliases do
             registry[string.lower(alias)] = entry.grammar
@@ -35,7 +35,7 @@ registerFamily(Scripting)
 registerFamily(Shell)
 registerFamily(WebJS)
 
-local Languages = {}
+const Languages = {}
 
 function Languages.get(name: string): Types.LanguageGrammar?
     assert(t.string(name))
@@ -43,8 +43,8 @@ function Languages.get(name: string): Types.LanguageGrammar?
 end
 
 function Languages.list(): { string }
-    local names = {}
-    local seen: { [string]: boolean } = {}
+    const names = {}
+    const seen: { [string]: boolean } = {}
     for name in registry do
         if not seen[name] then
             seen[name] = true

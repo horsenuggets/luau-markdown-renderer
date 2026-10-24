@@ -7,14 +7,14 @@ Java, Go, Rust, Zig, Kotlin, Swift, and Dart.
 
 --]]
 
-local SharedConstants = require("./SharedConstants")
+const SharedConstants = require("./SharedConstants")
 
-local C_COMMENTS = SharedConstants.C_COMMENTS
-local C_LINE_COMMENTS = SharedConstants.C_LINE_COMMENTS
-local DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
-local SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
+const C_COMMENTS = SharedConstants.C_COMMENTS
+const C_LINE_COMMENTS = SharedConstants.C_LINE_COMMENTS
+const DOUBLE_QUOTE = SharedConstants.DOUBLE_QUOTE
+const SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
 
-local C = {
+const C = {
     blockComments = C_COMMENTS,
     keywords = {
         "auto",
@@ -72,7 +72,7 @@ local C = {
     },
 }
 
-local Cpp = {
+const Cpp = {
     blockComments = C_COMMENTS,
     keywords = {
         "alignas",
@@ -187,7 +187,7 @@ local Cpp = {
     },
 }
 
-local CSharp = {
+const CSharp = {
     blockComments = C_COMMENTS,
     keywords = {
         "abstract",
@@ -287,7 +287,7 @@ local CSharp = {
     },
 }
 
-local Java = {
+const Java = {
     blockComments = C_COMMENTS,
     keywords = {
         "abstract",
@@ -372,7 +372,7 @@ local Java = {
     uppercaseTypes = true,
 }
 
-local Go = {
+const Go = {
     blockComments = C_COMMENTS,
     builtins = {
         "append",
@@ -450,7 +450,7 @@ local Go = {
     uppercaseTypes = true,
 }
 
-local Rust = {
+const Rust = {
     blockComments = C_COMMENTS,
     builtins = {
         "assert",
@@ -569,7 +569,7 @@ local Rust = {
     uppercaseTypes = true,
 }
 
-local Zig = {
+const Zig = {
     blockComments = {},
     builtins = {
         "@addWithOverflow",
@@ -704,7 +704,7 @@ local Zig = {
     },
 }
 
-local Kotlin = {
+const Kotlin = {
     blockComments = C_COMMENTS,
     keywords = {
         "abstract",
@@ -794,7 +794,7 @@ local Kotlin = {
     uppercaseTypes = true,
 }
 
-local Swift = {
+const Swift = {
     blockComments = C_COMMENTS,
     keywords = {
         "Any",
@@ -889,7 +889,7 @@ local Swift = {
     uppercaseTypes = true,
 }
 
-local Dart = {
+const Dart = {
     blockComments = C_COMMENTS,
     keywords = {
         "abstract",

@@ -10,17 +10,17 @@ containing TextLabels, Frames, and other UI elements.
 
 --]]
 
-local Fusion = require("@packages/Fusion")
-local Parser = require("@self/Parser")
-local SyntaxHighlighter = require("@self/SyntaxHighlighter")
-local Types = require("@self/Types")
-local renderFlowText = require("@self/renderFlowText")
-local renderInline = require("@self/renderInline")
-local t = require("@packages/t")
+const Fusion = require("@packages/Fusion")
+const Parser = require("@self/Parser")
+const SyntaxHighlighter = require("@self/SyntaxHighlighter")
+const Types = require("@self/Types")
+const renderFlowText = require("@self/renderFlowText")
+const renderInline = require("@self/renderInline")
+const t = require("@packages/t")
 
-local Children = Fusion.Children
+const Children = Fusion.Children
 
-local HEADING_SIZES = {
+const HEADING_SIZES = {
     [1] = 28,
     [2] = 24,
     [3] = 20,
@@ -28,16 +28,16 @@ local HEADING_SIZES = {
     [5] = 16,
     [6] = 14,
 }
-local CODE_BACKGROUND = Color3.fromRGB(30, 30, 30)
-local DEFAULT_TEXT_COLOR = Color3.fromRGB(204, 204, 204)
-local DEFAULT_TEXT_SIZE = 16
-local HEADING_TEXT_COLOR = Color3.fromRGB(228, 228, 228)
-local QUOTE_BORDER_COLOR = Color3.fromRGB(100, 100, 100)
-local RULE_COLOR = Color3.fromRGB(80, 80, 80)
-local STROKE_COLOR = Color3.fromRGB(60, 60, 60)
-local TEXT_FONT = Font.new("rbxasset://fonts/families/SourceSansPro.json")
-local HEADING_FONT = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Bold)
-local MONO_FONT = Font.new("rbxasset://fonts/families/RobotoMono.json")
+const CODE_BACKGROUND = Color3.fromRGB(30, 30, 30)
+const DEFAULT_TEXT_COLOR = Color3.fromRGB(204, 204, 204)
+const DEFAULT_TEXT_SIZE = 16
+const HEADING_TEXT_COLOR = Color3.fromRGB(228, 228, 228)
+const QUOTE_BORDER_COLOR = Color3.fromRGB(100, 100, 100)
+const RULE_COLOR = Color3.fromRGB(80, 80, 80)
+const STROKE_COLOR = Color3.fromRGB(60, 60, 60)
+const TEXT_FONT = Font.new("rbxasset://fonts/families/SourceSansPro.json")
+const HEADING_FONT = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Bold)
+const MONO_FONT = Font.new("rbxasset://fonts/families/RobotoMono.json")
 
 type MarkerProps = {
     fontFace: Font,
@@ -48,7 +48,7 @@ type MarkerProps = {
     textSize: number,
 }
 
-local function hasCode(spans: { Types.InlineSpan }): boolean
+const function hasCode(spans: { Types.InlineSpan }): boolean
     for _, span in spans do
         if span.Code then
             return true
@@ -57,23 +57,23 @@ local function hasCode(spans: { Types.InlineSpan }): boolean
     return false
 end
 
-local function renderList(
+const function renderList(
     scope: Fusion.Scope<typeof(Fusion)>,
     items: { Types.ListItem },
     layoutOrder: number,
     textFont: Font,
     createMarker: (scope: Fusion.Scope<typeof(Fusion)>, props: MarkerProps) -> Instance
 ): Instance
-    local MARKER_WIDTH = 22
-    local listChildren: { Instance } = {
+    const MARKER_WIDTH = 22
+    const listChildren: { Instance } = {
         scope:New("UIListLayout")({
             Padding = UDim.new(0, 4),
             SortOrder = Enum.SortOrder.LayoutOrder,
         }),
     }
     for i, item in items do
-        local indent = 16 + (item.Indent or 0) * 24
-        local textLeft = indent + MARKER_WIDTH
+        const indent = 16 + (item.Indent or 0) * 24
+        const textLeft = indent + MARKER_WIDTH
         local content: GuiObject
         if hasCode(item.Content) then
             content = renderFlowText(scope, item.Content, {
@@ -99,7 +99,7 @@ local function renderList(
                 TextYAlignment = Enum.TextYAlignment.Top,
             }) :: GuiObject
         end
-        local marker = createMarker(scope, {
+        const marker = createMarker(scope, {
             fontFace = textFont,
             index = i,
             indent = indent,
@@ -130,7 +130,7 @@ local function renderList(
     })
 end
 
-local function renderBlock(
+const function renderBlock(
     scope: Fusion.Scope<typeof(Fusion)>,
     node: Types.BlockNode,
     layoutOrder: number,
@@ -138,9 +138,9 @@ local function renderBlock(
     headingFont: Font
 ): Instance?
     if node.Type == "Paragraph" then
-        local spans = node.Content :: { Types.InlineSpan }
+        const spans = node.Content :: { Types.InlineSpan }
         if hasCode(spans) then
-            local container = renderFlowText(scope, spans, {
+            const container = renderFlowText(scope, spans, {
                 font = textFont,
                 textColor = DEFAULT_TEXT_COLOR,
                 textSize = DEFAULT_TEXT_SIZE,
@@ -163,12 +163,12 @@ local function renderBlock(
             TextYAlignment = Enum.TextYAlignment.Top,
         })
     elseif node.Type == "Heading" then
-        local level = node.Level :: number
-        local spans = node.Content :: { Types.InlineSpan }
-        local headingSize = HEADING_SIZES[level] or DEFAULT_TEXT_SIZE
-        local topMargin = if layoutOrder > 1 then 8 else 0
+        const level = node.Level :: number
+        const spans = node.Content :: { Types.InlineSpan }
+        const headingSize = HEADING_SIZES[level] or DEFAULT_TEXT_SIZE
+        const topMargin = if layoutOrder > 1 then 8 else 0
         if hasCode(spans) then
-            local container = renderFlowText(scope, spans, {
+            const container = renderFlowText(scope, spans, {
                 font = headingFont,
                 textColor = HEADING_TEXT_COLOR,
                 textSize = headingSize,
@@ -260,7 +260,7 @@ local function renderBlock(
             })
         end)
     elseif node.Type == "BlockQuote" then
-        local quoteChildren: { Instance } = {
+        const quoteChildren: { Instance } = {
             scope:New("UIListLayout")({
                 Padding = UDim.new(0, 6),
                 SortOrder = Enum.SortOrder.LayoutOrder,
@@ -269,9 +269,9 @@ local function renderBlock(
                 PaddingLeft = UDim.new(0, 12),
             }),
         }
-        local children = node.Children :: { Types.BlockNode }
+        const children = node.Children :: { Types.BlockNode }
         for i, child in children do
-            local rendered = renderBlock(scope, child, i, textFont, headingFont)
+            const rendered = renderBlock(scope, child, i, textFont, headingFont)
             if rendered then
                 table.insert(quoteChildren, rendered)
             end
@@ -314,7 +314,7 @@ local function renderBlock(
     return nil
 end
 
-local function render(
+const function render(
     scope: Fusion.Scope<typeof(Fusion)>,
     props: {
         HeadingFont: Font?,
@@ -332,11 +332,11 @@ local function render(
         Source = t.string,
         Width = t.optional(t.number),
     })(props))
-    local PADDING = 12
-    local textFont = props.Font or TEXT_FONT
-    local headingFont = props.HeadingFont or HEADING_FONT
-    local nodes = Parser.parse(props.Source)
-    local blockChildren: { Instance } = {
+    const PADDING = 12
+    const textFont = props.Font or TEXT_FONT
+    const headingFont = props.HeadingFont or HEADING_FONT
+    const nodes = Parser.parse(props.Source)
+    const blockChildren: { Instance } = {
         scope:New("UIListLayout")({
             Padding = UDim.new(0, 8),
             SortOrder = Enum.SortOrder.LayoutOrder,
@@ -349,13 +349,13 @@ local function render(
         }),
     }
     for i, node in nodes do
-        local rendered = renderBlock(scope, node, i, textFont, headingFont)
+        const rendered = renderBlock(scope, node, i, textFont, headingFont)
         if rendered then
             table.insert(blockChildren, rendered)
         end
     end
-    local width = props.Width
-    local height = props.Height
+    const width = props.Width
+    const height = props.Height
     local size: UDim2
     if width and height then
         size = UDim2.fromOffset(width, height)
@@ -366,7 +366,7 @@ local function render(
     else
         size = UDim2.fromScale(1, 1)
     end
-    local scrollFrame: ScrollingFrame = scope:New("ScrollingFrame")({
+    const scrollFrame: ScrollingFrame = scope:New("ScrollingFrame")({
         AutomaticCanvasSize = Enum.AutomaticSize.Y,
         BackgroundColor3 = Color3.fromRGB(24, 24, 24),
         CanvasSize = UDim2.new(0, 0, 0, 0),
@@ -387,12 +387,12 @@ local function render(
     })
 
     -- Fade scrollbar in/out on hover and scroll
-    local TweenService = game:GetService("TweenService")
-    local FADE_IN = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
-    local FADE_OUT = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+    const TweenService = game:GetService("TweenService")
+    const FADE_IN = TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+    const FADE_OUT = TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
     local hideTimer: thread? = nil
 
-    local function showScrollbar()
+    const function showScrollbar()
         if hideTimer then
             task.cancel(hideTimer)
             hideTimer = nil
@@ -400,7 +400,7 @@ local function render(
         TweenService:Create(scrollFrame, FADE_IN, { ScrollBarImageTransparency = 0 }):Play()
     end
 
-    local function hideScrollbar()
+    const function hideScrollbar()
         hideTimer = task.delay(1, function()
             TweenService:Create(scrollFrame, FADE_OUT, { ScrollBarImageTransparency = 1 }):Play()
             hideTimer = nil
@@ -417,7 +417,7 @@ local function render(
     return scrollFrame
 end
 
-local MarkdownRenderer = {}
+const MarkdownRenderer = {}
 MarkdownRenderer.Parser = Parser
 MarkdownRenderer.Types = Types
 MarkdownRenderer.render = render

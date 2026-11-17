@@ -10,7 +10,7 @@ to RichText strings.
 const Testable = require("@devpackages/Testable")
 const renderInline = require("@markdownrenderer/renderInline")
 
-const describe, expect, it = Testable.describe, Testable.expect, Testable.it
+const expect, it = Testable.expect, Testable.it
 
 return function()
     it("should render plain text", function()

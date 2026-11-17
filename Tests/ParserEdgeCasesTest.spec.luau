@@ -8,6 +8,9 @@ complex nesting scenarios.
 --]]
 
 const Parser = require("@markdownrenderer/Parser")
+const Testable = require("@devpackages/Testable")
+
+const describe, expect, it = Testable.describe, Testable.expect, Testable.it
 
 return function()
     describe("Empty and whitespace input", function()

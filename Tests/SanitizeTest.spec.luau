@@ -6,7 +6,10 @@ Tests for the HTML entity sanitization function.
 
 --]]
 
+const Testable = require("@devpackages/Testable")
 const sanitize = require("@markdownrenderer/sanitize")
+
+const expect, it = Testable.expect, Testable.it
 
 return function()
     it("should escape ampersands", function()

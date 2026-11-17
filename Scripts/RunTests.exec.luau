@@ -25,6 +25,7 @@ function RunTests.exec()
         Coverage = true,
         CoverageThreshold = 0,
         CoverageRoots = project.Source,
+        InjectGlobals = false,
     })
     RunTests.test()
 end

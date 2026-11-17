@@ -8,20 +8,5 @@
         "submodules": "./Submodules/",
         "tests": "./Tests/"
     },
-    "globals": [
-        "afterAll",
-        "afterEach",
-        "beforeAll",
-        "beforeEach",
-        "describe",
-        "elapsedTime",
-        "expect",
-        "fail",
-        "fdescribe",
-        "fit",
-        "it",
-        "project",
-        "xdescribe",
-        "xit"
-    ]
+    "globals": ["project"]
 }

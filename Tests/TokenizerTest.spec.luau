@@ -8,7 +8,10 @@ and edge cases across multiple language grammars.
 
 --]]
 
+const Testable = require("@devpackages/Testable")
 const Tokenizer = require("@markdownrenderer/SyntaxHighlighter/Tokenizer")
+
+const describe, expect, it = Testable.describe, Testable.expect, Testable.it
 
 const function tokTypes(tokens)
     const types = {}

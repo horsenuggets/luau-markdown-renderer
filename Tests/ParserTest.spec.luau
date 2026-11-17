@@ -7,6 +7,9 @@ Tests for the Markdown parser covering block-level and inline parsing.
 --]]
 
 const Parser = require("@markdownrenderer/Parser")
+const Testable = require("@devpackages/Testable")
+
+const describe, expect, it = Testable.describe, Testable.expect, Testable.it
 
 return function()
     describe("Headings", function()

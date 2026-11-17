@@ -7,7 +7,10 @@ from multi-line strings.
 
 --]]
 
+const Testable = require("@devpackages/Testable")
 const dedent = require("@markdownrenderer/dedent")
+
+const describe, expect, it = Testable.describe, Testable.expect, Testable.it
 
 return function()
     it("should strip common leading tabs", function()

@@ -8,8 +8,11 @@ language registry, theme system, and diff highlighting.
 --]]
 
 const SyntaxHighlighter = require("@markdownrenderer/SyntaxHighlighter")
+const Testable = require("@devpackages/Testable")
 const Languages = SyntaxHighlighter.Languages
 const Theme = SyntaxHighlighter.Theme
+
+const describe, expect, it = Testable.describe, Testable.expect, Testable.it
 
 return function()
     describe("highlight", function()

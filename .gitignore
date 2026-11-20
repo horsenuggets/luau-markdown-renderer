@@ -33,3 +33,9 @@ Tools
 # Worktrees
 /.worktrees/
 /.wt/
+
+# Dependencies
+/.wally-install/
+
+# Generated files
+/wally.install.json

@@ -41,12 +41,12 @@ const C = {
         "typedef",
         "union",
         "volatile",
-        "while",
+        "while"
     },
     lineComments = C_LINE_COMMENTS,
     strings = {
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "char",
@@ -68,8 +68,8 @@ const C = {
         "uint16_t",
         "uint32_t",
         "uint64_t",
-        "NULL",
-    },
+        "NULL"
+    }
 }
 
 const Cpp = {
@@ -150,13 +150,13 @@ const Cpp = {
         "volatile",
         "while",
         "xor",
-        "xor_eq",
+        "xor_eq"
     },
     lineComments = C_LINE_COMMENTS,
     strings = {
         { open = 'R"(', close = ')"', multiline = true },
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "bool",
@@ -183,8 +183,8 @@ const Cpp = {
         "pair",
         "tuple",
         "shared_ptr",
-        "unique_ptr",
-    },
+        "unique_ptr"
+    }
 }
 
 const CSharp = {
@@ -255,14 +255,14 @@ const CSharp = {
         "virtual",
         "volatile",
         "while",
-        "yield",
+        "yield"
     },
     lineComments = C_LINE_COMMENTS,
     strings = {
         { open = '@"', close = '"', escape = '""' },
         { open = '$"', close = '"' },
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "bool",
@@ -283,8 +283,8 @@ const CSharp = {
         "uint",
         "ulong",
         "ushort",
-        "void",
-    },
+        "void"
+    }
 }
 
 const Java = {
@@ -337,13 +337,13 @@ const Java = {
         "void",
         "volatile",
         "while",
-        "yield",
+        "yield"
     },
     lineComments = C_LINE_COMMENTS,
     strings = {
         { open = '"""', close = '"""', multiline = true },
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "boolean",
@@ -367,9 +367,9 @@ const Java = {
         "List",
         "Map",
         "Set",
-        "Optional",
+        "Optional"
     },
-    uppercaseTypes = true,
+    uppercaseTypes = true
 }
 
 const Go = {
@@ -389,7 +389,7 @@ const Go = {
         "print",
         "println",
         "real",
-        "recover",
+        "recover"
     },
     keywords = {
         "break",
@@ -416,13 +416,13 @@ const Go = {
         "struct",
         "switch",
         "type",
-        "var",
+        "var"
     },
     lineComments = C_LINE_COMMENTS,
     strings = {
         { open = "`", close = "`", multiline = true },
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "bool",
@@ -445,9 +445,9 @@ const Go = {
         "uint32",
         "uint64",
         "uintptr",
-        "any",
+        "any"
     },
-    uppercaseTypes = true,
+    uppercaseTypes = true
 }
 
 const Rust = {
@@ -486,7 +486,7 @@ const Rust = {
         "unreachable",
         "vec",
         "write",
-        "writeln",
+        "writeln"
     },
     keywords = {
         "as",
@@ -526,7 +526,7 @@ const Rust = {
         "unsafe",
         "use",
         "where",
-        "while",
+        "while"
     },
     lineComments = C_LINE_COMMENTS,
     strings = {
@@ -534,7 +534,7 @@ const Rust = {
         { open = 'r"', close = '"' },
         { open = "b'", close = "'" },
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "bool",
@@ -564,9 +564,9 @@ const Rust = {
         "Rc",
         "Arc",
         "Cell",
-        "RefCell",
+        "RefCell"
     },
-    uppercaseTypes = true,
+    uppercaseTypes = true
 }
 
 const Zig = {
@@ -617,7 +617,7 @@ const Zig = {
         "@min",
         "@mod",
         "@mulAdd",
-        "@mulWithOverflow",
+        "@mulWithOverflow"
     },
     keywords = {
         "addrspace",
@@ -670,12 +670,12 @@ const Zig = {
         "unreachable",
         "var",
         "volatile",
-        "while",
+        "while"
     },
     lineComments = { "//" },
     strings = {
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "bool",
@@ -700,8 +700,8 @@ const Zig = {
         "u64",
         "u128",
         "usize",
-        "void",
-    },
+        "void"
+    }
 }
 
 const Kotlin = {
@@ -769,13 +769,13 @@ const Kotlin = {
         "vararg",
         "when",
         "where",
-        "while",
+        "while"
     },
     lineComments = C_LINE_COMMENTS,
     strings = {
         { open = '"""', close = '"""', multiline = true },
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "Any",
@@ -789,9 +789,9 @@ const Kotlin = {
         "Nothing",
         "Short",
         "String",
-        "Unit",
+        "Unit"
     },
-    uppercaseTypes = true,
+    uppercaseTypes = true
 }
 
 const Swift = {
@@ -865,12 +865,12 @@ const Swift = {
         "var",
         "weak",
         "where",
-        "while",
+        "while"
     },
     lineComments = C_LINE_COMMENTS,
     strings = {
         { open = '"""', close = '"""', multiline = true },
-        DOUBLE_QUOTE,
+        DOUBLE_QUOTE
     },
     types = {
         "Array",
@@ -884,9 +884,9 @@ const Swift = {
         "Set",
         "String",
         "UInt",
-        "Void",
+        "Void"
     },
-    uppercaseTypes = true,
+    uppercaseTypes = true
 }
 
 const Dart = {
@@ -955,14 +955,14 @@ const Dart = {
         "when",
         "while",
         "with",
-        "yield",
+        "yield"
     },
     lineComments = C_LINE_COMMENTS,
     strings = {
         { open = '"""', close = '"""', multiline = true },
         { open = "'''", close = "'''", multiline = true },
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "bool",
@@ -977,8 +977,8 @@ const Dart = {
         "Set",
         "Future",
         "Stream",
-        "Object",
-    },
+        "Object"
+    }
 }
 
 return {
@@ -991,5 +991,5 @@ return {
     { aliases = { "kotlin", "kt" }, grammar = Kotlin },
     { aliases = { "rust", "rs" }, grammar = Rust },
     { aliases = { "swift" }, grammar = Swift },
-    { aliases = { "zig" }, grammar = Zig },
+    { aliases = { "zig" }, grammar = Zig }
 }

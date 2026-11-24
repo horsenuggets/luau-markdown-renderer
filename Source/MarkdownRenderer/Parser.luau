@@ -32,7 +32,7 @@ const function parseInline(text: string): { Types.InlineSpan }
                 Bold = bold,
                 Italic = italic,
                 Strikethrough = strikethrough,
-                Code = code,
+                Code = code
             })
             current = ""
         end
@@ -187,7 +187,7 @@ const function parseBlocks(lines: { string }): { Types.BlockNode }
             table.insert(nodes, {
                 Type = "Heading",
                 Level = headingLevel,
-                Content = parseInline(headingText),
+                Content = parseInline(headingText)
             })
             pos += 1
             continue
@@ -213,7 +213,7 @@ const function parseBlocks(lines: { string }): { Types.BlockNode }
             table.insert(nodes, {
                 Type = "CodeBlock",
                 Language = language,
-                Code = table.concat(codeLines, "\n"),
+                Code = table.concat(codeLines, "\n")
             })
             continue
         end
@@ -221,7 +221,7 @@ const function parseBlocks(lines: { string }): { Types.BlockNode }
         -- Horizontal rules
         if isHorizontalRule(line) then
             table.insert(nodes, {
-                Type = "HorizontalRule",
+                Type = "HorizontalRule"
             })
             pos += 1
             continue
@@ -236,7 +236,7 @@ const function parseBlocks(lines: { string }): { Types.BlockNode }
             end
             table.insert(nodes, {
                 Type = "BlockQuote",
-                Children = parseBlocks(quoteLines),
+                Children = parseBlocks(quoteLines)
             })
             continue
         end
@@ -254,13 +254,13 @@ const function parseBlocks(lines: { string }): { Types.BlockNode }
                 const indent = math.floor(countLeadingSpaces(spaces) / 2)
                 table.insert(items, {
                     Content = parseInline(itemText),
-                    Indent = indent,
+                    Indent = indent
                 })
                 pos += 1
             end
             table.insert(nodes, {
                 Type = "BulletList",
-                Items = items,
+                Items = items
             })
             continue
         end
@@ -278,13 +278,13 @@ const function parseBlocks(lines: { string }): { Types.BlockNode }
                 const indent = math.floor(countLeadingSpaces(spaces) / 2)
                 table.insert(items, {
                     Content = parseInline(itemText),
-                    Indent = indent,
+                    Indent = indent
                 })
                 pos += 1
             end
             table.insert(nodes, {
                 Type = "NumberedList",
-                Items = items,
+                Items = items
             })
             continue
         end
@@ -295,7 +295,7 @@ const function parseBlocks(lines: { string }): { Types.BlockNode }
             const text = table.concat(paragraphLines, " ")
             table.insert(nodes, {
                 Type = "Paragraph",
-                Content = parseInline(text),
+                Content = parseInline(text)
             })
         else
             pos += 1

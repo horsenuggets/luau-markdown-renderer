@@ -18,8 +18,8 @@ function Lint.exec()
     require("@submodules/luau-cicd/Scripts/Helpers/Lint").run({
         Platforms = {
             { Platform = "lune", Targets = { "/Scripts" } },
-            { Platform = "roblox", Targets = { "/Source" }, RojoProject = "dev.project.json" },
-        },
+            { Platform = "roblox", Targets = { "/Source" }, RojoProject = "dev.project.json" }
+        }
     })
 end
 

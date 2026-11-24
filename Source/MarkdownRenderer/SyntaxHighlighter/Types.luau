@@ -20,14 +20,14 @@ export type TokenType =
 
 export type Token = {
     text: string,
-    type: TokenType,
+    type: TokenType
 }
 
 export type StringDelimiter = {
     close: string,
     escape: string?,
     multiline: boolean?,
-    open: string,
+    open: string
 }
 
 export type LanguageGrammar = {
@@ -41,7 +41,7 @@ export type LanguageGrammar = {
     punctuation: string?,
     strings: { StringDelimiter }?,
     types: { string }?,
-    uppercaseTypes: boolean?,
+    uppercaseTypes: boolean?
 }
 
 export type PreparedGrammar = {
@@ -55,7 +55,7 @@ export type PreparedGrammar = {
     punctuation: string,
     strings: { StringDelimiter }?,
     types: { [string]: boolean },
-    uppercaseTypes: boolean,
+    uppercaseTypes: boolean
 }
 
 export type Theme = {
@@ -68,7 +68,7 @@ export type Theme = {
     operator: string,
     punctuation: string,
     string: string,
-    type: string,
+    type: string
 }
 
 return {}

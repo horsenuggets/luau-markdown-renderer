@@ -14,9 +14,9 @@ const SINGLE_QUOTE = SharedConstants.SINGLE_QUOTE
 const JSON = {
     keywords = { "false", "null", "true" },
     strings = {
-        DOUBLE_QUOTE,
+        DOUBLE_QUOTE
     },
-    detectFunctionCalls = false,
+    detectFunctionCalls = false
 }
 
 const TOML = {
@@ -26,9 +26,9 @@ const TOML = {
         { open = '"""', close = '"""', multiline = true },
         { open = "'''", close = "'''", multiline = true },
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
-    detectFunctionCalls = false,
+    detectFunctionCalls = false
 }
 
 const YAML = {
@@ -36,13 +36,13 @@ const YAML = {
     lineComments = { "#" },
     strings = {
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
-    detectFunctionCalls = false,
+    detectFunctionCalls = false
 }
 
 return {
     { aliases = { "json", "jsonc" }, grammar = JSON },
     { aliases = { "toml" }, grammar = TOML },
-    { aliases = { "yaml", "yml" }, grammar = YAML },
+    { aliases = { "yaml", "yml" }, grammar = YAML }
 }

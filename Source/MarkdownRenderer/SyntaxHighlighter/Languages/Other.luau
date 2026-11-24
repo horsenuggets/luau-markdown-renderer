@@ -69,7 +69,7 @@ const Haskell = {
         "unwords",
         "words",
         "zip",
-        "zipWith",
+        "zipWith"
     },
     keywords = {
         "as",
@@ -97,12 +97,12 @@ const Haskell = {
         "qualified",
         "then",
         "type",
-        "where",
+        "where"
     },
     lineComments = { "--" },
     strings = {
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "Bool",
@@ -116,15 +116,15 @@ const Haskell = {
         "Maybe",
         "Ordering",
         "String",
-        "Word",
+        "Word"
     },
-    uppercaseTypes = true,
+    uppercaseTypes = true
 }
 
 const Markdown = {
     keywords = {},
     strings = {},
-    detectFunctionCalls = false,
+    detectFunctionCalls = false
 }
 
 -- Diff highlighting is line-based rather than token-based.
@@ -134,11 +134,11 @@ const Markdown = {
 const Diff = {
     keywords = {},
     strings = {},
-    detectFunctionCalls = false,
+    detectFunctionCalls = false
 }
 
 return {
     { aliases = { "diff", "patch" }, grammar = Diff },
     { aliases = { "haskell", "hs" }, grammar = Haskell },
-    { aliases = { "markdown", "md" }, grammar = Markdown },
+    { aliases = { "markdown", "md" }, grammar = Markdown }
 }

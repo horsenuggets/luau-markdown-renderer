@@ -21,7 +21,7 @@ const THEMES: { [string]: Types.Theme } = {
         operator = "#ff7b72",
         punctuation = "#c9d1d9",
         string = "#a5d6ff",
-        type = "#ffa657",
+        type = "#ffa657"
     },
     ["github-light"] = {
         builtin = "#953800",
@@ -33,7 +33,7 @@ const THEMES: { [string]: Types.Theme } = {
         operator = "#cf222e",
         punctuation = "#24292f",
         string = "#0a3069",
-        type = "#953800",
+        type = "#953800"
     },
     monokai = {
         builtin = "#66d9ef",
@@ -45,7 +45,7 @@ const THEMES: { [string]: Types.Theme } = {
         operator = "#f92672",
         punctuation = "#f8f8f2",
         string = "#e6db74",
-        type = "#66d9ef",
+        type = "#66d9ef"
     },
     ["one-dark"] = {
         builtin = "#d19a66",
@@ -57,8 +57,8 @@ const THEMES: { [string]: Types.Theme } = {
         operator = "#56b6c2",
         punctuation = "#abb2bf",
         string = "#98c379",
-        type = "#e5c07b",
-    },
+        type = "#e5c07b"
+    }
 }
 
 const DEFAULT_THEME = "github-dark"

@@ -58,7 +58,7 @@ return function()
         const spans = {
             { Text = "plain ", Bold = false, Italic = false, Strikethrough = false, Code = false },
             { Text = "bold", Bold = true, Italic = false, Strikethrough = false, Code = false },
-            { Text = " end", Bold = false, Italic = false, Strikethrough = false, Code = false },
+            { Text = " end", Bold = false, Italic = false, Strikethrough = false, Code = false }
         }
         const result = renderInline(spans)
         expect(result).to.equal("plain <b>bold</b> end")

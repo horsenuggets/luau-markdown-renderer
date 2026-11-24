@@ -49,11 +49,11 @@ return {
         const ui = MarkdownRenderer.render(scope, {
             Source = SOURCE,
             Font = Font.new("rbxasset://fonts/families/FredokaOne.json"),
-            HeadingFont = Font.new("rbxasset://fonts/families/FredokaOne.json"),
+            HeadingFont = Font.new("rbxasset://fonts/families/FredokaOne.json")
         })
         ui.AnchorPoint = Vector2.new(0.5, 0.5)
         ui.Position = UDim2.fromScale(0.5, 0.5)
         ui.Size = UDim2.new(1, -50, 1, -50)
         ui.Parent = props.target
-    end,
+    end
 }

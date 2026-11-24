@@ -58,7 +58,7 @@ const JavaScript = {
         "setInterval",
         "setTimeout",
         "undefined",
-        "window",
+        "window"
     },
     keywords = {
         "async",
@@ -102,14 +102,14 @@ const JavaScript = {
         "void",
         "while",
         "with",
-        "yield",
+        "yield"
     },
     lineComments = C_LINE_COMMENTS,
     strings = {
         TEMPLATE_LITERAL,
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
-    },
+        SINGLE_QUOTE
+    }
 }
 
 const TypeScript = {
@@ -155,7 +155,7 @@ const TypeScript = {
         "setInterval",
         "setTimeout",
         "undefined",
-        "window",
+        "window"
     },
     keywords = {
         "abstract",
@@ -220,13 +220,13 @@ const TypeScript = {
         "void",
         "while",
         "with",
-        "yield",
+        "yield"
     },
     lineComments = C_LINE_COMMENTS,
     strings = {
         TEMPLATE_LITERAL,
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "any",
@@ -252,8 +252,8 @@ const TypeScript = {
         "NonNullable",
         "ReturnType",
         "Parameters",
-        "Awaited",
-    },
+        "Awaited"
+    }
 }
 
 const CSS = {
@@ -272,13 +272,13 @@ const CSS = {
         "not",
         "only",
         "or",
-        "to",
+        "to"
     },
     strings = {
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
-    detectFunctionCalls = false,
+    detectFunctionCalls = false
 }
 
 const HTML = {
@@ -337,24 +337,24 @@ const HTML = {
         "title",
         "tr",
         "ul",
-        "video",
+        "video"
     },
     strings = {
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     detectFunctionCalls = false,
-    htmlTags = true,
+    htmlTags = true
 }
 
 const XML = {
     blockComments = { { "<!--", "-->" } },
     strings = {
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     detectFunctionCalls = false,
-    htmlTags = true,
+    htmlTags = true
 }
 
 return {
@@ -364,5 +364,5 @@ return {
     { aliases = { "jsx" }, grammar = JavaScript },
     { aliases = { "typescript", "ts" }, grammar = TypeScript },
     { aliases = { "tsx" }, grammar = TypeScript },
-    { aliases = { "xml", "svg" }, grammar = XML },
+    { aliases = { "xml", "svg" }, grammar = XML }
 }

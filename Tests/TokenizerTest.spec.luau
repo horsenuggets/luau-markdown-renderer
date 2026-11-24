@@ -49,7 +49,7 @@ return function()
     describe("Strings", function()
         it("should parse double-quoted strings", function()
             const grammar = {
-                strings = { { open = '"', close = '"' } },
+                strings = { { open = '"', close = '"' } }
             }
             const tokens = Tokenizer.tokenize('"hello world"', grammar)
             expect(tokens[1].type).to.equal("string")
@@ -58,7 +58,7 @@ return function()
 
         it("should handle escape characters", function()
             const grammar = {
-                strings = { { open = '"', close = '"' } },
+                strings = { { open = '"', close = '"' } }
             }
             const tokens = Tokenizer.tokenize('"say \\"hi\\""', grammar)
             expect(tokens[1].type).to.equal("string")
@@ -67,7 +67,7 @@ return function()
 
         it("should parse single-quoted strings", function()
             const grammar = {
-                strings = { { open = "'", close = "'" } },
+                strings = { { open = "'", close = "'" } }
             }
             const tokens = Tokenizer.tokenize("'hello'", grammar)
             expect(tokens[1].type).to.equal("string")
@@ -76,7 +76,7 @@ return function()
 
         it("should parse multiline strings", function()
             const grammar = {
-                strings = { { open = "[[", close = "]]", multiline = true } },
+                strings = { { open = "[[", close = "]]", multiline = true } }
             }
             const tokens = Tokenizer.tokenize("[[line1\nline2]]", grammar)
             expect(tokens[1].type).to.equal("string")
@@ -85,7 +85,7 @@ return function()
 
         it("should stop non-multiline strings at newline", function()
             const grammar = {
-                strings = { { open = '"', close = '"' } },
+                strings = { { open = '"', close = '"' } }
             }
             const tokens = Tokenizer.tokenize('"unclosed\nnext', grammar)
             expect(tokens[1].type).to.equal("string")
@@ -94,7 +94,7 @@ return function()
 
         it("should parse triple-quoted strings", function()
             const grammar = {
-                strings = { { open = '"""', close = '"""', multiline = true } },
+                strings = { { open = '"""', close = '"""', multiline = true } }
             }
             const tokens = Tokenizer.tokenize('"""multi\nline"""', grammar)
             expect(tokens[1].type).to.equal("string")
@@ -289,7 +289,7 @@ return function()
             const grammar = {
                 keywords = { "local", "function", "end", "return" },
                 lineComments = { "--" },
-                strings = { { open = '"', close = '"' } },
+                strings = { { open = '"', close = '"' } }
             }
             const source = 'local x = "hello" -- comment'
             const tokens = Tokenizer.tokenize(source, grammar)

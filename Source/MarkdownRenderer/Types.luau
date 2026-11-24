@@ -15,12 +15,12 @@ export type InlineSpan = {
     Bold: boolean,
     Italic: boolean,
     Strikethrough: boolean,
-    Code: boolean,
+    Code: boolean
 }
 
 export type ListItem = {
     Content: { InlineSpan },
-    Indent: number,
+    Indent: number
 }
 
 export type BlockNode = {
@@ -30,7 +30,7 @@ export type BlockNode = {
     Language: string?,
     Code: string?,
     Items: { ListItem }?,
-    Children: { BlockNode }?,
+    Children: { BlockNode }?
 }
 
 return Types

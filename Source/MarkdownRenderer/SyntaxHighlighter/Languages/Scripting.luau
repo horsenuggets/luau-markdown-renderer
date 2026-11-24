@@ -35,15 +35,15 @@ const Lua = {
         "then",
         "true",
         "until",
-        "while",
+        "while"
     },
     lineComments = { "--" },
     strings = {
         { open = "[[", close = "]]", multiline = true },
         { open = "[=[", close = "]=]", multiline = true },
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
-    },
+        SINGLE_QUOTE
+    }
 }
 
 const Luau = {
@@ -73,7 +73,7 @@ const Luau = {
         "true",
         "type",
         "until",
-        "while",
+        "while"
     },
     lineComments = { "--" },
     strings = {
@@ -81,7 +81,7 @@ const Luau = {
         { open = "[=[", close = "]=]", multiline = true },
         { open = "`", close = "`" },
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "any",
@@ -92,8 +92,8 @@ const Luau = {
         "number",
         "string",
         "thread",
-        "unknown",
-    },
+        "unknown"
+    }
 }
 
 const Python = {
@@ -153,7 +153,7 @@ const Python = {
         "tuple",
         "type",
         "vars",
-        "zip",
+        "zip"
     },
     keywords = {
         "False",
@@ -190,7 +190,7 @@ const Python = {
         "try",
         "while",
         "with",
-        "yield",
+        "yield"
     },
     lineComments = { "#" },
     strings = {
@@ -199,8 +199,8 @@ const Python = {
         { open = 'f"', close = '"' },
         { open = "f'", close = "'" },
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
-    },
+        SINGLE_QUOTE
+    }
 }
 
 const Ruby = {
@@ -216,7 +216,7 @@ const Ruby = {
         "p",
         "raise",
         "require",
-        "require_relative",
+        "require_relative"
     },
     keywords = {
         "BEGIN",
@@ -256,13 +256,13 @@ const Ruby = {
         "until",
         "when",
         "while",
-        "yield",
+        "yield"
     },
     lineComments = { "#" },
     strings = {
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
-    },
+        SINGLE_QUOTE
+    }
 }
 
 const PHP = {
@@ -280,7 +280,7 @@ const PHP = {
         "strpos",
         "substr",
         "unset",
-        "var_dump",
+        "var_dump"
     },
     keywords = {
         "abstract",
@@ -340,12 +340,12 @@ const PHP = {
         "var",
         "while",
         "xor",
-        "yield",
+        "yield"
     },
     lineComments = { "//", "#" },
     strings = {
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "bool",
@@ -357,8 +357,8 @@ const PHP = {
         "object",
         "self",
         "string",
-        "void",
-    },
+        "void"
+    }
 }
 
 const Elixir = {
@@ -380,7 +380,7 @@ const Elixir = {
         "length",
         "puts",
         "raise",
-        "tl",
+        "tl"
     },
     keywords = {
         "after",
@@ -416,14 +416,14 @@ const Elixir = {
         "unless",
         "use",
         "when",
-        "with",
+        "with"
     },
     lineComments = { "#" },
     strings = {
         { open = '"""', close = '"""', multiline = true },
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
-    },
+        SINGLE_QUOTE
+    }
 }
 
 return {
@@ -432,5 +432,5 @@ return {
     { aliases = { "luau" }, grammar = Luau },
     { aliases = { "php" }, grammar = PHP },
     { aliases = { "python", "py" }, grammar = Python },
-    { aliases = { "ruby", "rb" }, grammar = Ruby },
+    { aliases = { "ruby", "rb" }, grammar = Ruby }
 }

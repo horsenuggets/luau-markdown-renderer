@@ -57,7 +57,7 @@ end
 
 type CodeWord = {
     text: string,
-    width: number,
+    width: number
 }
 
 type CodeGroup = {
@@ -65,20 +65,20 @@ type CodeGroup = {
     fontSize: number,
     height: number,
     pills: { Frame },
-    words: { CodeWord },
+    words: { CodeWord }
 }
 
 type FlowItem = {
     codeGroup: CodeGroup?,
     element: Instance,
     margin: number?,
-    width: number,
+    width: number
 }
 
 type FlowConfig = {
     font: Font,
     textColor: Color3,
-    textSize: number,
+    textSize: number
 }
 
 -- Distribute code group words into pre-allocated pill frames
@@ -220,7 +220,7 @@ const function renderFlowText(
     assert(t.interface({
         font = t.Font,
         textColor = t.Color3,
-        textSize = t.number,
+        textSize = t.number
     })(config))
     const baseFont = config.font
     const textColor = config.textColor
@@ -268,7 +268,7 @@ const function renderFlowText(
                     Visible = false,
                     [Children] = {
                         scope:New("UICorner")({
-                            CornerRadius = CODE_CORNER_RADIUS,
+                            CornerRadius = CODE_CORNER_RADIUS
                         }),
                         scope:New("TextLabel")({
                             AnchorPoint = Vector2.new(0.5, 0.5),
@@ -279,9 +279,9 @@ const function renderFlowText(
                             Size = UDim2.new(1, 0, 1, 0),
                             Text = "",
                             TextColor3 = Color3.fromRGB(220, 220, 220),
-                            TextSize = spanTextSize,
-                        }),
-                    },
+                            TextSize = spanTextSize
+                        })
+                    }
                 }) :: Frame
                 table.insert(pills, pill)
                 table.insert(elements, pill)
@@ -295,10 +295,10 @@ const function renderFlowText(
                     fontSize = spanTextSize,
                     height = pillHeight,
                     pills = pills,
-                    words = wordData,
+                    words = wordData
                 },
                 element = pills[1],
-                width = fullWidth,
+                width = fullWidth
             })
         else
             const words = splitIntoWords(text)
@@ -320,7 +320,7 @@ const function renderFlowText(
                     TextColor3 = textColor,
                     TextSize = spanTextSize,
                     TextXAlignment = Enum.TextXAlignment.Left,
-                    TextYAlignment = Enum.TextYAlignment.Top,
+                    TextYAlignment = Enum.TextYAlignment.Top
                 })
                 table.insert(items, { element = label, width = wordWidth })
                 table.insert(elements, label)
@@ -332,7 +332,7 @@ const function renderFlowText(
         BackgroundTransparency = 1,
         Name = "FlowText",
         Size = UDim2.new(1, 0, 0, 0),
-        [Children] = elements,
+        [Children] = elements
     }) :: Frame
 
     const function onResize()

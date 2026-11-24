@@ -26,7 +26,7 @@ const HEADING_SIZES = {
     [3] = 20,
     [4] = 18,
     [5] = 16,
-    [6] = 14,
+    [6] = 14
 }
 const CODE_BACKGROUND = Color3.fromRGB(30, 30, 30)
 const DEFAULT_TEXT_COLOR = Color3.fromRGB(204, 204, 204)
@@ -45,7 +45,7 @@ type MarkerProps = {
     indent: number,
     markerWidth: number,
     textColor: Color3,
-    textSize: number,
+    textSize: number
 }
 
 const function hasCode(spans: { Types.InlineSpan }): boolean
@@ -68,8 +68,8 @@ const function renderList(
     const listChildren: { Instance } = {
         scope:New("UIListLayout")({
             Padding = UDim.new(0, 4),
-            SortOrder = Enum.SortOrder.LayoutOrder,
-        }),
+            SortOrder = Enum.SortOrder.LayoutOrder
+        })
     }
     for i, item in items do
         const indent = 16 + (item.Indent or 0) * 24
@@ -79,7 +79,7 @@ const function renderList(
             content = renderFlowText(scope, item.Content, {
                 font = textFont,
                 textColor = DEFAULT_TEXT_COLOR,
-                textSize = DEFAULT_TEXT_SIZE,
+                textSize = DEFAULT_TEXT_SIZE
             })
             content.Position = UDim2.fromOffset(textLeft, 0)
             content.Size = UDim2.new(1, -textLeft, 0, 0)
@@ -96,7 +96,7 @@ const function renderList(
                 TextSize = DEFAULT_TEXT_SIZE,
                 TextWrapped = true,
                 TextXAlignment = Enum.TextXAlignment.Left,
-                TextYAlignment = Enum.TextYAlignment.Top,
+                TextYAlignment = Enum.TextYAlignment.Top
             }) :: GuiObject
         end
         const marker = createMarker(scope, {
@@ -105,7 +105,7 @@ const function renderList(
             indent = indent,
             markerWidth = MARKER_WIDTH,
             textColor = DEFAULT_TEXT_COLOR,
-            textSize = DEFAULT_TEXT_SIZE,
+            textSize = DEFAULT_TEXT_SIZE
         })
         table.insert(
             listChildren,
@@ -116,8 +116,8 @@ const function renderList(
                 Size = UDim2.new(1, 0, 0, 0),
                 [Children] = {
                     marker,
-                    content,
-                },
+                    content
+                }
             })
         )
     end
@@ -126,7 +126,7 @@ const function renderList(
         BackgroundTransparency = 1,
         LayoutOrder = layoutOrder,
         Size = UDim2.new(1, 0, 0, 0),
-        [Children] = listChildren,
+        [Children] = listChildren
     })
 end
 
@@ -143,7 +143,7 @@ const function renderBlock(
             const container = renderFlowText(scope, spans, {
                 font = textFont,
                 textColor = DEFAULT_TEXT_COLOR,
-                textSize = DEFAULT_TEXT_SIZE,
+                textSize = DEFAULT_TEXT_SIZE
             })
             container.LayoutOrder = layoutOrder
             return container
@@ -160,7 +160,7 @@ const function renderBlock(
             TextSize = DEFAULT_TEXT_SIZE,
             TextWrapped = true,
             TextXAlignment = Enum.TextXAlignment.Left,
-            TextYAlignment = Enum.TextYAlignment.Top,
+            TextYAlignment = Enum.TextYAlignment.Top
         })
     elseif node.Type == "Heading" then
         const level = node.Level :: number
@@ -171,7 +171,7 @@ const function renderBlock(
             const container = renderFlowText(scope, spans, {
                 font = headingFont,
                 textColor = HEADING_TEXT_COLOR,
-                textSize = headingSize,
+                textSize = headingSize
             })
             container.LayoutOrder = layoutOrder
             return container
@@ -183,7 +183,7 @@ const function renderBlock(
             Size = UDim2.new(1, 0, 0, 0),
             [Children] = {
                 scope:New("UIPadding")({
-                    PaddingTop = UDim.new(0, topMargin),
+                    PaddingTop = UDim.new(0, topMargin)
                 }),
                 scope:New("TextLabel")({
                     AutomaticSize = Enum.AutomaticSize.Y,
@@ -196,9 +196,9 @@ const function renderBlock(
                     TextSize = headingSize,
                     TextWrapped = true,
                     TextXAlignment = Enum.TextXAlignment.Left,
-                    TextYAlignment = Enum.TextYAlignment.Top,
-                }),
-            },
+                    TextYAlignment = Enum.TextYAlignment.Top
+                })
+            }
         })
     elseif node.Type == "CodeBlock" then
         return scope:New("Frame")({
@@ -208,13 +208,13 @@ const function renderBlock(
             Size = UDim2.new(1, 0, 0, 0),
             [Children] = {
                 scope:New("UICorner")({
-                    CornerRadius = UDim.new(0, 4),
+                    CornerRadius = UDim.new(0, 4)
                 }),
                 scope:New("UIPadding")({
                     PaddingBottom = UDim.new(0, 8),
                     PaddingLeft = UDim.new(0, 12),
                     PaddingRight = UDim.new(0, 12),
-                    PaddingTop = UDim.new(0, 8),
+                    PaddingTop = UDim.new(0, 8)
                 }),
                 scope:New("TextLabel")({
                     AutomaticSize = Enum.AutomaticSize.Y,
@@ -227,9 +227,9 @@ const function renderBlock(
                     TextSize = 14,
                     TextWrapped = true,
                     TextXAlignment = Enum.TextXAlignment.Left,
-                    TextYAlignment = Enum.TextYAlignment.Top,
-                }),
-            },
+                    TextYAlignment = Enum.TextYAlignment.Top
+                })
+            }
         })
     elseif node.Type == "BulletList" then
         return renderList(scope, node.Items :: { Types.ListItem }, layoutOrder, textFont, function(innerScope, props)
@@ -242,7 +242,7 @@ const function renderBlock(
                 TextColor3 = props.textColor,
                 TextSize = math.floor(props.textSize * 0.65),
                 TextXAlignment = Enum.TextXAlignment.Left,
-                TextYAlignment = Enum.TextYAlignment.Center,
+                TextYAlignment = Enum.TextYAlignment.Center
             })
         end)
     elseif node.Type == "NumberedList" then
@@ -256,18 +256,18 @@ const function renderBlock(
                 TextColor3 = props.textColor,
                 TextSize = props.textSize,
                 TextXAlignment = Enum.TextXAlignment.Left,
-                TextYAlignment = Enum.TextYAlignment.Top,
+                TextYAlignment = Enum.TextYAlignment.Top
             })
         end)
     elseif node.Type == "BlockQuote" then
         const quoteChildren: { Instance } = {
             scope:New("UIListLayout")({
                 Padding = UDim.new(0, 6),
-                SortOrder = Enum.SortOrder.LayoutOrder,
+                SortOrder = Enum.SortOrder.LayoutOrder
             }),
             scope:New("UIPadding")({
-                PaddingLeft = UDim.new(0, 12),
-            }),
+                PaddingLeft = UDim.new(0, 12)
+            })
         }
         const children = node.Children :: { Types.BlockNode }
         for i, child in children do
@@ -285,7 +285,7 @@ const function renderBlock(
                 -- Left border
                 scope:New("Frame")({
                     BackgroundColor3 = QUOTE_BORDER_COLOR,
-                    Size = UDim2.new(0, 4, 1, 0),
+                    Size = UDim2.new(0, 4, 1, 0)
                 }),
                 -- Content container
                 scope:New("Frame")({
@@ -293,9 +293,9 @@ const function renderBlock(
                     BackgroundTransparency = 1,
                     Position = UDim2.fromOffset(4, 0),
                     Size = UDim2.new(1, -4, 0, 0),
-                    [Children] = quoteChildren,
-                }),
-            },
+                    [Children] = quoteChildren
+                })
+            }
         })
     elseif node.Type == "HorizontalRule" then
         return scope:New("Frame")({
@@ -306,9 +306,9 @@ const function renderBlock(
                 scope:New("Frame")({
                     BackgroundColor3 = RULE_COLOR,
                     Position = UDim2.fromOffset(0, 16),
-                    Size = UDim2.new(1, 0, 0, 1),
-                }),
-            },
+                    Size = UDim2.new(1, 0, 0, 1)
+                })
+            }
         })
     end
     return nil
@@ -321,7 +321,7 @@ const function render(
         Font: Font?,
         Height: number?,
         Source: string,
-        Width: number?,
+        Width: number?
     }
 ): Instance
     assert(t.table(scope))
@@ -330,7 +330,7 @@ const function render(
         HeadingFont = t.optional(t.Font),
         Height = t.optional(t.number),
         Source = t.string,
-        Width = t.optional(t.number),
+        Width = t.optional(t.number)
     })(props))
     const PADDING = 12
     const textFont = props.Font or TEXT_FONT
@@ -339,14 +339,14 @@ const function render(
     const blockChildren: { Instance } = {
         scope:New("UIListLayout")({
             Padding = UDim.new(0, 8),
-            SortOrder = Enum.SortOrder.LayoutOrder,
+            SortOrder = Enum.SortOrder.LayoutOrder
         }),
         scope:New("UIPadding")({
             PaddingBottom = UDim.new(0, PADDING),
             PaddingLeft = UDim.new(0, PADDING),
             PaddingRight = UDim.new(0, PADDING),
-            PaddingTop = UDim.new(0, PADDING),
-        }),
+            PaddingTop = UDim.new(0, PADDING)
+        })
     }
     for i, node in nodes do
         const rendered = renderBlock(scope, node, i, textFont, headingFont)
@@ -376,14 +376,14 @@ const function render(
         Size = size,
         [Children] = {
             scope:New("UICorner")({
-                CornerRadius = UDim.new(0, 8),
+                CornerRadius = UDim.new(0, 8)
             }),
             scope:New("UIStroke")({
                 Color = STROKE_COLOR,
-                Thickness = 1,
+                Thickness = 1
             }),
-            blockChildren,
-        },
+            blockChildren
+        }
     })
 
     -- Fade scrollbar in/out on hover and scroll

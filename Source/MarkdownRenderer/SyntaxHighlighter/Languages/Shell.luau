@@ -45,7 +45,7 @@ const Bash = {
         "umask",
         "unalias",
         "unset",
-        "wait",
+        "wait"
     },
     keywords = {
         "break",
@@ -64,14 +64,14 @@ const Bash = {
         "select",
         "then",
         "until",
-        "while",
+        "while"
     },
     lineComments = { "#" },
     strings = {
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
-    operators = "+-*/%=<>!&|^~?:$",
+    operators = "+-*/%=<>!&|^~?:$"
 }
 
 const SQL = {
@@ -235,12 +235,12 @@ const SQL = {
         "view",
         "when",
         "where",
-        "with",
+        "with"
     },
     lineComments = { "--" },
     strings = {
         DOUBLE_QUOTE,
-        SINGLE_QUOTE,
+        SINGLE_QUOTE
     },
     types = {
         "BIGINT",
@@ -288,12 +288,12 @@ const SQL = {
         "timestamp",
         "tinyint",
         "uuid",
-        "varchar",
+        "varchar"
     },
-    detectFunctionCalls = false,
+    detectFunctionCalls = false
 }
 
 return {
     { aliases = { "bash", "sh", "shell", "zsh" }, grammar = Bash },
-    { aliases = { "sql", "mysql", "postgresql", "postgres", "sqlite" }, grammar = SQL },
+    { aliases = { "sql", "mysql", "postgresql", "postgres", "sqlite" }, grammar = SQL }
 }

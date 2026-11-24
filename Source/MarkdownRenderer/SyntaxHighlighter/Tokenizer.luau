@@ -41,7 +41,7 @@ const function prepareGrammar(grammar: Types.LanguageGrammar): Types.PreparedGra
         punctuation = grammar.punctuation or DEFAULT_PUNCTUATION,
         strings = grammar.strings,
         types = toSet(grammar.types),
-        uppercaseTypes = grammar.uppercaseTypes == true,
+        uppercaseTypes = grammar.uppercaseTypes == true
     }
 end
 
